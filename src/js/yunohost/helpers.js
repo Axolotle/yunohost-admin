@@ -257,17 +257,20 @@
         /**
          * Generic fetch to query the yunohost API.
 
-         * @arg {string} uri
+         * @arg {string|string[]} uris
          * @arg {Object} [options] - fetch options.
          * @arg {string} [options.method='GET'] - fetch method.
          * @arg {string} [options.type='json'] - fetch response type method name.
          * @arg {Object} [options.params={}] - an object literal that will be converted to URLSearchParams and sent as the body for a post request.
          * @arg {Object} [options.websocket=true] - opens a websocket connection before resolving.
-         * @return {Promise} Promise that resolve an array `[err=true|false, result1|undefined, ...]`
+         * @return {Promise} Promise that resolve an array `[err=false|true, result1|undefined, ...]`
          */
-        apiNew: function(uri, {method = 'GET', type = 'json', params = {}, websocket = true} = {}) {
+        apiNew: function(uris, {method = 'GET', type = 'json', params = {}, websocket = true} = {}) {
             // Had to use a promise here since the fetch can't be returned from the `ws.onopen` callback
             return new Promise(resolve => {
+                if (!Array.isArray(uris)) {
+                    uris = [uris]
+                }
                 if (window.navigator && window.navigator.language && (typeof params.locale === 'undefined')) {
                     params.locale = y18n.locale || window.navigator.language.substr(0, 2);
                 }
@@ -289,7 +292,7 @@
                         }
                 };
 
-                if (method == 'POST') {
+                if (method != 'GET') {
                     const urlParams = new URLSearchParams();
                     for (const [key, value] of Object.entries(params)) {
                         urlParams.append(key, value);
@@ -297,70 +300,86 @@
                     fetch_options.body = urlParams;
                 }
 
-                const call = () => {
+                const handleErrors = async (response, uri) => {
+                    // FIXME Is this needed or jquery specific weird behavior ?
+                    // if (response.status == 200) {
+                    //     // Fail with 200, WTF
+                    //     return {};
+                    // }
+                    // Unauthorized or wrong password
+                    if (response.status == 401) {
+                        if (uri === '/login') {
+                            throw new Error(y18n.t('wrong_password'));
+                        } else {
+                            this.redirect('#/login');
+                            throw new Error(y18n.t('unauthorized'));
+                        }
+                    }
+                    // 502 Bad gateway means API is down
+                    if (response.status == 502) {
+                        throw new Error(y18n.t('api_not_responding'));
+                    }
+                    // FIXME, responseText not part of fetch, see above (err 500)
+                    // More verbose error messages first
+                    if (typeof response.responseText !== 'undefined') {
+                        throw new Error(response.responseText);
+                    }
+                    // 0 mean "the connexion has been closed" apparently
+                    if (response.status == 0) {
+                        const errorMessage = response.status + ' ' + response.statusText;
+                        console.log(response);
+                        throw new Error(y18n.t('error_connection_interrupted', [errorMessage]));
+                    }
+                    // Deal with the rest of the possible errors with responseText
+                    let responseText = await response.text();
+                    // 500
+                    if (response.status == 500) {
+                        // To fit previous code we get the response as text and try
+                        // to parse it as json
+                        // NOT TESTED
+                        let error_log;
+                        try {
+                            error_log = JSON.parse(responseText);
+                            error_log.route = error_log.route.join(' ') + '\n';
+                            error_log.arguments = JSON.stringify(error_log.arguments);
+                        }
+                        catch (e) {
+                            error_log = {};
+                            error_log.route = "Failed to parse route";
+                            error_log.arguments = "Failed to parse arguments";
+                            error_log.traceback = response.responseText;
+                        }
+                        throw new Error(y18n.t('internal_exception', [error_log.route, error_log.arguments, error_log.traceback]));
+                    }
+                    if (responseText) {
+                        throw new Error(responseText);
+                    }
+
+                    responseText = response.status + ' ' + response.statusText;
+                    console.log(response);
+                    throw new Error(y18n.t('error_server_unexpected', [responseText]));
+                }
+
+                // Make the actual fetch and returns the response body as wanted,
+                // throws errors so `callAll` can catch them,
+                const call = uri => {
                     return fetch('https://' + store.get('url') + uri, fetch_options)
-                    .then(async response => {
-                        // FIXME Is this needed or jquery specific weird behavior ?
-                        // if (response.status == 200) {
-                        //     // Fail with 200, WTF
-                        //     return {};
-                        // }
-
-                        // Unauthorized or wrong password
-                        if (response.status == 401) {
-                            if (uri === '/login') {
-                                throw new Error(y18n.t('wrong_password'));
-                            } else {
-                                this.redirect('#/login');
-                                throw new Error(y18n.t('unauthorized'));
-                            }
+                    .then(response => {
+                        if (!response.ok) {
+                            return handleErrors(response, uri);
                         }
-                        // 500
-                        else if (response.status == 500) {
-                            // FIXME, responseText not part of fetch, can get it with
-                            // `response.text()` but it consumes the request.
-                            // We can `await response.text()` and parse it as JSON if
-                            // needed later
-                            try {
-                                error_log = JSON.parse(response.responseText);
-                                error_log.route = error_log.route.join(' ') + '\n';
-                                error_log.arguments = JSON.stringify(error_log.arguments);
-                            }
-                            catch (e) {
-                                error_log = {};
-                                error_log.route = "Failed to parse route";
-                                error_log.arguments = "Failed to parse arguments";
-                                error_log.traceback = response.responseText;
-                            }
-                            throw new Error(y18n.t('internal_exception', [error_log.route, error_log.arguments, error_log.traceback]));
-                        }
-                        // 502 Bad gateway means API is down
-                        else if (response.status == 502) {
-                            throw new Error(y18n.t('api_not_responding'));
-                        }
-                        // FIXME, responseText not part of fetch, see above (err 500)
-                        // More verbose error messages first
-                        else if (typeof response.responseText !== 'undefined') {
-                            throw new Error(response.responseText);
-                        }
-                        // 0 mean "the connexion has been closed" apparently
-                        else if (response.status == 0) {
-                            const errorMessage = response.status + ' ' + response.statusText;
-                            console.log(response);
-                            throw new Error(y18n.t('error_connection_interrupted', [errorMessage]));
-                        }
-                        // Return HTTP error code at least
-                        else if (!response.ok) {
-                            const errorMessage = response.status + ' ' + response.statusText;
-                            console.log(response);
-                            throw new Error(y18n.t('error_server_unexpected', [errorMessage]));
-                        }
-
-                        if (type == 'none') return;
                         return response[type]();
-                    })
+                    });
+                };
+
+                // This asynchronously fetch all requests and if one fail it will
+                // return `[err==true]`
+                // QUESTION: if we want to flash every errors if multiple ones occurs,
+                // we will need to use something like `Promise.allSettled()`.
+                const callAll = () => {
+                    return Promise.all(uris.map(uri => call(uri)))
                     .then(data => {
-                        return [false, data]
+                        return [false, ...data]
                     })
                     .catch(error => {
                         this.flash('fail', error.message)
@@ -372,7 +391,7 @@
 
                         return [true];
                     })
-                }
+                };
 
                 // QUESTION: Why do we try to establish a socket connection at every request ?
                 // Can't we just open it at page load ?
@@ -401,12 +420,12 @@
                     ws.onopen = function () {
                         if (!ws.api_called) {
                             ws.api_called = true;
-                            resolve(call());
+                            resolve(callAll());
                         }
                     };
                 }
                 else {
-                    resolve(call())
+                    resolve(callAll())
                 }
             });
         },

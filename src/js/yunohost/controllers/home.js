@@ -20,7 +20,7 @@
      *
      */
 
-    app.get('#/login', function (c) {
+    app.get('#/login', async function (c) {
         $('#masthead').show()
             .find('.logout-btn').hide();
         store.set('path-1', '#/login');
@@ -68,10 +68,17 @@
         // Store url from params, it could have change form 'run' state
         store.set('url', c.params['domain'] +'/yunohost/api');
 
-        var params = {
+        const params = {
             password: c.params['password']
-        };
-        c.api('POST', '/login', params, function(data) {
+        }
+        // Can't use `await` here because Sammy can't handle `async` callback in post
+        // request (triggers a 405)
+        c.apiNew('/login', {
+            method: 'POST', type: 'text', params, websocket: false
+        }).then(output => {
+            const [err, data] = output;
+            if (err) return;
+
             store.set('connected', true);
             c.trigger('login');
             $('#masthead .logout-btn').fadeIn();
@@ -81,19 +88,19 @@
             } else {
                 c.redirect('#/');
             }
-        }, undefined, false);
-
+        });
     });
 
-    app.get('#/logout', function (c) {
-        c.api('GET', '/logout', {}, function (data) {
-            store.clear('url');
-            store.clear('connected');
-            store.set('path', '#/');
-            c.trigger('logout');
-            c.flash('success', y18n.t('logged_out'));
-            c.redirect('#/login');
-        }, undefined, false);
+    app.get('#/logout', async function (c) {
+        const [err, data] = await c.apiNew('/logout', {type: 'text', websocket: false});
+        if (err) return;
+
+        store.clear('url');
+        store.clear('connected');
+        store.set('path', '#/');
+        c.trigger('logout');
+        c.flash('success', y18n.t('logged_out'));
+        c.redirect('#/login');
     });
 
 })();

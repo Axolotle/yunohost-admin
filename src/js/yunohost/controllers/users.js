@@ -116,59 +116,60 @@
     }
 
 
-    app.get('#/groups', function (c) {
-        c.api('GET', '/users/groups?full&include_primary_groups', {}, function(data_groups) {
-        c.api('GET', '/users', {}, function(data_users) {
-        c.api('GET', '/users/permissions?short', {}, function(data_permissions) {
-            //var perms = data_permissions.permissions;
-            var specific_perms = {};
-            var all_perms = data_permissions.permissions;
-            var users = Object.keys(data_users.users);
+    app.get('#/groups', async function (c) {
+        const [err, data_groups, data_users, data_permissions] = await c.apiNew([
+            '/users/groups?full&include_primary_groups',
+            '/users',
+            '/users/permissions?short',
+        ]);
+        if (err) return;
 
-            // Enrich groups data with primary group indicator and inversed items list
-            for (var group in data_groups.groups) {
-                data_groups.groups[group].primary = users.indexOf(group) !== -1;
-                data_groups.groups[group].permissionsInv = all_perms.filter(function(item) {
-                    return data_groups.groups[group].permissions.indexOf(item) === -1;
-                }).filter(function(item) {
-                    return group != "visitors" || (item != "mail.main" && item != "xmpp.main"); // Remove 'email' and 'xmpp' in visitors's permission choice list
-                });
-                data_groups.groups[group].membersInv = users.filter(function(item) {
-                    return data_groups.groups[group].members.indexOf(item) === -1;
-                });
-            }
+        //var perms = data_permissions.permissions;
+        const specific_perms = {};
+        const all_perms = data_permissions.permissions;
+        const users = Object.keys(data_users.users);
 
-            // Declare all_users and visitors has special
-            data_groups.groups['all_users'].special = true;
-            data_groups.groups['visitors'].special = true;
+        // Enrich groups data with primary group indicator and inversed items list
+        for (var group in data_groups.groups) {
+            data_groups.groups[group].primary = users.indexOf(group) !== -1;
+            data_groups.groups[group].permissionsInv = all_perms.filter(function(item) {
+                return data_groups.groups[group].permissions.indexOf(item) === -1;
+            }).filter(function(item) {
+                return group != "visitors" || (item != "mail.main" && item != "xmpp.main"); // Remove 'email' and 'xmpp' in visitors's permission choice list
+            });
+            data_groups.groups[group].membersInv = users.filter(function(item) {
+                return data_groups.groups[group].members.indexOf(item) === -1;
+            });
+        }
 
-            // Data given to the view with 2 functions to convert technical
-            // permission id to display names
-            data = {
-                'groups':data_groups.groups,
-                'displayPermission': function (text) {
-                    // Display a permission correctly for a human
-                    text = text.replace('.main', '');
-                    if (text.indexOf('.') > -1)
-                        text = text.replace('.', ' (') + ')';
+        // Declare all_users and visitors has special
+        data_groups.groups['all_users'].special = true;
+        data_groups.groups['visitors'].special = true;
 
-                    if (text == "mail")
-                        text = "E-mail";
-                    else if (text == "xmpp")
-                        text = "XMPP";
-                    else
-                        text = toTitleCase(text);
+        // Data given to the view with 2 functions to convert technical
+        // permission id to display names
+        data = {
+            'groups': data_groups.groups,
+            'displayPermission': function (text) {
+                // Display a permission correctly for a human
+                text = text.replace('.main', '');
+                if (text.indexOf('.') > -1)
+                    text = text.replace('.', ' (') + ')';
 
-                    return text;
-                },
-                'displayUser': function (text) {
-                    return text;
-                },
-            };
-            updateView(data);
-        });
-        });
-        });
+                if (text == "mail")
+                    text = "E-mail";
+                else if (text == "xmpp")
+                    text = "XMPP";
+                else
+                    text = toTitleCase(text);
+
+                return text;
+            },
+            'displayUser': function (text) {
+                return text;
+            },
+        };
+        updateView(data);
     });
 
     // Create a new group
@@ -178,7 +179,10 @@
 
     app.post('#/groups/create', function (c) {
         c.params['groupname'] = c.params['groupname'].replace(' ', '_').toLowerCase();
-        c.api('POST', '/users/groups', c.params.toHash(), function(data) {
+        c.apiNew('/users/groups', {method: 'POST', params: c.params.toHash()})
+        .then(output => {
+            const [err, data] = output;
+            if (err) return;
             c.redirect_to('#/groups');
         });
     });
@@ -189,26 +193,26 @@
      */
 
     // List existing users
-    app.get('#/users', function (c) {
-        c.api('GET', '/users', {}, function(data) {
-            c.view('user/user_list', data);
-        });
+    app.get('#/users', async function (c) {
+        const [err, data] = await c.apiNew('/users');
+        if (err) return;
+        c.view('user/user_list', data);
     });
 
     // Create user form
-    app.get('#/users/create', function (c) {
-        c.api('GET', '/domains', {}, function(data) {
+    app.get('#/users/create', async function (c) {
+        const [err, data] = await c.apiNew('/domains');
+        if (err) return;
 
-            // Password min length
-            data.password_min_length = PASSWORD_MIN_LENGTH;
-            c.view('user/user_create', data, function(){
-                var usernameField = $('#username');
-                usernameField.on('blur', function(){
-                    var emailField = $('#email');
-                    if (emailField.val() == '') {
-                        emailField.val(usernameField.val());
-                    }
-                });
+        // Password min length
+        data.password_min_length = PASSWORD_MIN_LENGTH;
+        c.view('user/user_create', data, function(){
+            var usernameField = $('#username');
+            usernameField.on('blur', function(){
+                var emailField = $('#email');
+                if (emailField.val() == '') {
+                    emailField.val(usernameField.val());
+                }
             });
         });
     });
@@ -224,12 +228,18 @@
                 if (c.params['mailbox_quota']) {
                     c.params['mailbox_quota'] += "M";
                 }
-                else {c.params['mailbox_quota'] = 0;}
+                else {
+                    c.params['mailbox_quota'] = 0;
+                }
 
                 // Compute email field
                 c.params['mail'] = c.params['email'] + c.params['domain'];
 
-                c.api('POST', '/users', c.params.toHash(), function(data) {
+                c.apiNew('/users', {method: 'POST', params: c.params.toHash()})
+                .then(output => {
+                    const [err, data] = output;
+                    if (err) return;
+
                     c.redirect_to('#/users');
                 });
             }
@@ -239,104 +249,109 @@
     });
 
     // Show user information
-    app.get('#/users/:user', function (c) {
-        c.api('GET', '/users/'+ c.params['user'], {}, function(data) {
-            c.view('user/user_info', data, function() {
+    app.get('#/users/:user', async function (c) {
+        const [err, data] = await c.apiNew('/users/'+ c.params['user']);
+        if (err) return;
 
-                // Configure delete button behavior
-                $('button[data-action="delete"]').on("click", function() {
-                    var user = $(this).data("user");
+        c.view('user/user_info', data, function() {
 
-                    var params = {};
+            // Configure delete button behavior
+            $('button[data-action="delete"]').on("click", function() {
+                var user = $(this).data("user");
 
-                    // make confirm content
-                    var purgeCheckbox = '<div><input type="checkbox" id="purge-user-data" name="purge-user-data"> <label for="purge-user-data">'+ y18n.t('purge_user_data_checkbox', [user]) +'</label></div>';
-                    var purgeAlertMessage = '<div class="danger" style="display: none">⚠ '+ y18n.t('purge_user_data_warning') +'</div>';
-                    var confirmModalContent = $('<div>'+ y18n.t('confirm_delete', [user]) +'<br><br>'+ purgeCheckbox +'<br>'+ purgeAlertMessage +'</div>');
+                var params = {};
 
-                    // display confirm modal
-                    c.confirm(
-                        y18n.t('users'),
-                        confirmModalContent,
-                        function(){
-                            c.api('DELETE', '/users/'+ user, params, function(data) {
-                                c.redirect_to('#/users');
-                            });
-                        }
-                    );
+                // make confirm content
+                var purgeCheckbox = '<div><input type="checkbox" id="purge-user-data" name="purge-user-data"> <label for="purge-user-data">'+ y18n.t('purge_user_data_checkbox', [user]) +'</label></div>';
+                var purgeAlertMessage = '<div class="danger" style="display: none">⚠ '+ y18n.t('purge_user_data_warning') +'</div>';
+                var confirmModalContent = $('<div>'+ y18n.t('confirm_delete', [user]) +'<br><br>'+ purgeCheckbox +'<br>'+ purgeAlertMessage +'</div>');
 
-                    // toggle purge warning and parameter
-                    confirmModalContent.find("input").click(function(){
+                // display confirm modal
+                c.confirm(
+                    y18n.t('users'),
+                    confirmModalContent,
+                    async function () {
+                        const [err, data] = await c.apiNew('/users/'+ user, {method: 'DELETE', type: 'text', params});
+                        if (err) return;
+                        c.redirect_to('#/users');
+                    }
+                );
 
-                        if (confirmModalContent.find("input").is(':checked')) {
-                            params.purge = "";
-                            confirmModalContent.find(".danger").show();
-                        }
-                        else {
-                            delete params.purge;
-                            confirmModalContent.find(".danger").hide();
-                        };
-                    });
+                // toggle purge warning and parameter
+                confirmModalContent.find("input").click(function(){
+
+                    if (confirmModalContent.find("input").is(':checked')) {
+                        params.purge = "";
+                        confirmModalContent.find(".danger").show();
+                    }
+                    else {
+                        delete params.purge;
+                        confirmModalContent.find(".danger").hide();
+                    };
                 });
             });
         });
     });
 
     // Edit user form
-    app.get('#/users/:user/edit', function (c) {
-        c.api('GET', '/users/'+ c.params['user'], {}, function(data) {
-            c.api('GET', '/domains', {}, function(dataDomains) {
+    app.get('#/users/:user/edit', async function (c) {
+        const [err, user, domains] = await c.apiNew([
+            '/users/'+ c.params['user'],
+            '/domains'
+        ]);
+        if (err) return;
 
-                // Password min length
-                data.password_min_length = PASSWORD_MIN_LENGTH;
+        // Password min length
+        user.password_min_length = PASSWORD_MIN_LENGTH;
 
-                // User email use a fake splitted field
-                var email = data.mail.split('@');
-                data.email = {
-                    username : email[0],
-                    domain : email[1]
-                };
+        // User email use a fake splitted field
+        var email = user.mail.split('@');
+        user.email = {
+            username : email[0],
+            domain : email[1]
+        };
 
-                // Return quota with M unit
-                if (data['mailbox-quota'].limit) {
-                    var unit = data['mailbox-quota'].limit.slice(-1);
-                    var value = data['mailbox-quota'].limit.substr(0, data['mailbox-quota'].limit.length -1);
-                    if (unit == 'b') {
-                        data.quota = Math.ceil(value / (1024 * 1024));
-                    }
-                    else if (unit == 'k') {
-                        data.quota = Math.ceil(value / 1024);
-                    }
-                    else if (unit == 'M') {
-                        data.quota = value;
-                    }
-                    else if (unit == 'G') {
-                        data.quota = Math.ceil(value * 1024);
-                    }
-                    else if (unit == 'T') {
-                        data.quota = Math.ceil(value * 1024 * 1024);
-                    }
-                }
-                else {data.quota = 0;}
+        // Return quota with M unit
+        if (user['mailbox-quota'].limit) {
+            var unit = user['mailbox-quota'].limit.slice(-1);
+            var value = user['mailbox-quota'].limit.substr(0, user['mailbox-quota'].limit.length -1);
+            if (unit == 'b') {
+                user.quota = Math.ceil(value / (1024 * 1024));
+            }
+            else if (unit == 'k') {
+                user.quota = Math.ceil(value / 1024);
+            }
+            else if (unit == 'M') {
+                user.quota = value;
+            }
+            else if (unit == 'G') {
+                user.quota = Math.ceil(value * 1024);
+            }
+            else if (unit == 'T') {
+                user.quota = Math.ceil(value * 1024 * 1024);
+            }
+        }
+        else {
+            user.quota = 0;
+        }
 
-                // Domains
-                data.domains = [];
-                $.each(dataDomains.domains, function(key, value) {
-                    data.domains.push({
-                        domain: value,
-                        selected: (value == data.email.domain) ? true : false
-                    });
-                });
+        // Domains
+        user.domains = domains.domains.map(domain => ({
+            domain,
+            selected: (domain == user.email.domain) ? true : false
+        }));
 
-                c.view('user/user_edit', data);
-            });
-        });
+        c.view('user/user_edit', user);
     });
 
     // Update user information
     app.put('#/users/:user', function (c) {
         // Get full user object
-        c.api('GET', '/users/'+ c.params['user'], {}, function(user) {
+        c.apiNew('/users/'+ c.params['user'])
+        .then(output => {
+            const [err, user] = output;
+            if (err) return;
+
             // Force unit or disable quota
             if (c.params['mailbox_quota']) {
                 c.params['mailbox_quota'] += "M";
@@ -385,7 +400,13 @@
                         }
                         else {
                             params['change_password'] = params['password'];
-                            c.api('PUT', '/users/'+ c.params['user'], params, function(data) {
+
+                            // Can't use `await` here because Sammy can't handle `async`
+                            // callback in put request (triggers a page reload)
+                            c.apiNew('/users/'+ c.params['user'], {method: 'PUT', params})
+                            .then(output => {
+                                const [err, data] = output;
+                                if (err) return;
                                 c.redirect_to('#/users/'+ c.params['user']);
                             });
                         }
@@ -395,12 +416,18 @@
                     }
                 }
                 else {
-                    c.api('PUT', '/users/'+ c.params['user'], params, function(data) {
+                    // Can't use `await` here because Sammy can't handle `async`
+                    // callback in put request (triggers a page reload)
+                    c.apiNew('/users/'+ c.params['user'], {method: 'PUT', params})
+                    .then(output => {
+                        const [err, data] = output;
+                        if (err) return;
                         c.redirect_to('#/users/'+ c.params['user']);
                     });
                 }
             }
         });
+
     });
 
 })();

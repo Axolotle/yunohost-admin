@@ -254,6 +254,163 @@
 
         },
 
+        /**
+         * Generic fetch to query the yunohost API.
+
+         * @arg {string} uri
+         * @arg {Object} [options] - fetch options.
+         * @arg {string} [options.method='GET'] - fetch method.
+         * @arg {string} [options.type='json'] - fetch response type method name.
+         * @arg {Object} [options.params={}] - an object literal that will be converted to URLSearchParams and sent as the body for a post request.
+         * @arg {Object} [options.websocket=true] - opens a websocket connection before resolving.
+         * @return {Promise} Promise that resolve an array `[err=true|false, result1|undefined, ...]`
+         */
+        apiNew: function(uri, {method = 'GET', type = 'json', params = {}, websocket = true} = {}) {
+            // Had to use a promise here since the fetch can't be returned from the `ws.onopen` callback
+            return new Promise(resolve => {
+                if (window.navigator && window.navigator.language && (typeof params.locale === 'undefined')) {
+                    params.locale = y18n.locale || window.navigator.language.substr(0, 2);
+                }
+
+                this.showLoader();
+
+                fetch_options = {
+                        method,
+                        credentials: 'include',
+                        mode: 'cors',
+                        headers: {
+                            // FIXME is it important to keep this previous `Accept` header ?
+                            // 'Accept': 'application/json, text/javascript, */*; q=0.01',
+                            // Auto header is :
+                            // "Accept": "*/*",
+
+                            // Also is this still important ? (needed by back-end)
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                };
+
+                if (method == 'POST') {
+                    const urlParams = new URLSearchParams();
+                    for (const [key, value] of Object.entries(params)) {
+                        urlParams.append(key, value);
+                    }
+                    fetch_options.body = urlParams;
+                }
+
+                const call = () => {
+                    return fetch('https://' + store.get('url') + uri, fetch_options)
+                    .then(async response => {
+                        // FIXME Is this needed or jquery specific weird behavior ?
+                        // if (response.status == 200) {
+                        //     // Fail with 200, WTF
+                        //     return {};
+                        // }
+
+                        // Unauthorized or wrong password
+                        if (response.status == 401) {
+                            if (uri === '/login') {
+                                throw new Error(y18n.t('wrong_password'));
+                            } else {
+                                this.redirect('#/login');
+                                throw new Error(y18n.t('unauthorized'));
+                            }
+                        }
+                        // 500
+                        else if (response.status == 500) {
+                            // FIXME, responseText not part of fetch, can get it with
+                            // `response.text()` but it consumes the request.
+                            // We can `await response.text()` and parse it as JSON if
+                            // needed later
+                            try {
+                                error_log = JSON.parse(response.responseText);
+                                error_log.route = error_log.route.join(' ') + '\n';
+                                error_log.arguments = JSON.stringify(error_log.arguments);
+                            }
+                            catch (e) {
+                                error_log = {};
+                                error_log.route = "Failed to parse route";
+                                error_log.arguments = "Failed to parse arguments";
+                                error_log.traceback = response.responseText;
+                            }
+                            throw new Error(y18n.t('internal_exception', [error_log.route, error_log.arguments, error_log.traceback]));
+                        }
+                        // 502 Bad gateway means API is down
+                        else if (response.status == 502) {
+                            throw new Error(y18n.t('api_not_responding'));
+                        }
+                        // FIXME, responseText not part of fetch, see above (err 500)
+                        // More verbose error messages first
+                        else if (typeof response.responseText !== 'undefined') {
+                            throw new Error(response.responseText);
+                        }
+                        // 0 mean "the connexion has been closed" apparently
+                        else if (response.status == 0) {
+                            const errorMessage = response.status + ' ' + response.statusText;
+                            console.log(response);
+                            throw new Error(y18n.t('error_connection_interrupted', [errorMessage]));
+                        }
+                        // Return HTTP error code at least
+                        else if (!response.ok) {
+                            const errorMessage = response.status + ' ' + response.statusText;
+                            console.log(response);
+                            throw new Error(y18n.t('error_server_unexpected', [errorMessage]));
+                        }
+
+                        if (type == 'none') return;
+                        return response[type]();
+                    })
+                    .then(data => {
+                        return [false, data]
+                    })
+                    .catch(error => {
+                        this.flash('fail', error.message)
+
+                        this.hideLoader();
+                        // Force scrollTop on page load
+                        $('html, body').scrollTop(0);
+                        store.clear('slide');
+
+                        return [true];
+                    })
+                }
+
+                // QUESTION: Why do we try to establish a socket connection at every request ?
+                // Can't we just open it at page load ?
+                // Is it a way to get socket's messages flashed before the actual request result ?
+                if (websocket) {
+                    // Open a WebSocket connection to retrieve live messages from the moulinette
+                    var ws = new WebSocket('wss://'+ store.get('url') +'/messages');
+                    // Flag to avoid to call twice the API
+                    // We need to set that in ws object as we need to use it in ws.onopen
+                    // and several ws object could be running at the same time...
+                    ws.api_called = false;
+                    ws.onmessage = function(evt) {
+                        // console.log(evt.data);
+                        $.each($.parseJSON(evt.data), function(k, v) {
+                            c.flash(k, v);
+                        });
+                    };
+
+                    // If not connected, WebSocket connection will raise an error, but we do not want to interrupt API request
+                    ws.onerror = function () {
+                        ws.onopen();
+                    };
+
+                    ws.onclose = function() { };
+
+                    ws.onopen = function () {
+                        if (!ws.api_called) {
+                            ws.api_called = true;
+                            resolve(call());
+                        }
+                    };
+                }
+                else {
+                    resolve(call())
+                }
+            });
+        },
+
 
         // Ask confirmation to the user through the modal window
         confirm: function(title, content, confirmCallback, cancelCallback) {

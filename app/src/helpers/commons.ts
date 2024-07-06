@@ -145,6 +145,12 @@ export function getFileContent(
   })
 }
 
+export function entries<K extends keyof T, T extends Obj = Obj>(obj: T) {
+  return Object.entries(obj) as {
+    [k in Extract<K, string>]: [k, T[k]]
+  }[Extract<K, string>][]
+}
+
 export function omit<T extends Obj, K extends (keyof T)[]>(
   obj: T,
   keys: K,

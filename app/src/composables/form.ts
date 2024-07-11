@@ -5,7 +5,7 @@ import type {
   ValidationRuleCollection,
 } from '@vuelidate/core'
 import useVuelidate from '@vuelidate/core'
-import type { InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
+import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
 import { computed, inject, provide, reactive, toValue } from 'vue'
 
 import { APIBadRequestError, type APIError } from '@/api/errors'
@@ -118,4 +118,16 @@ export function useForm<T extends Obj, F extends FormFieldDict<T>>(
     serverErrors,
     onSubmit,
   }
+}
+
+export function useArrayRule<V extends any[], T extends ValidationArgs>(
+  values: MaybeRefOrGetter<V>,
+  rules: T,
+): ComputedRef<ValidationArgs<T>> {
+  return computed(() => {
+    return toValue(values).reduce((total: Obj<T>, v: V[number], index) => {
+      total[index] = rules
+      return total
+    }, {})
+  })
 }

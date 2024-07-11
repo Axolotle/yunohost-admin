@@ -106,7 +106,7 @@ export type InputItemProps = BaseWritableItemProps & {
 }
 
 export type SelectItemProps = BaseWritableItemProps & {
-  choices: string[]
+  choices: string[] | { text: string; value: string }[]
 }
 
 export type TagsItemProps = BaseWritableItemProps & {

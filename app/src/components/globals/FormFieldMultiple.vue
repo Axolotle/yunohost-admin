@@ -99,7 +99,7 @@ const error = computed(() => {
 
 const subProps = computed<FormFieldProps<C, ArrInnerType<MV>>[]>(() => {
   return (
-    map(props.modelValue, (modelValue, i) => {
+    props.modelValue?.map((modelValue: ArrInnerType<MV>, i) => {
       return {
         props: {
           ...props.props,

@@ -6,7 +6,7 @@
 import { computed, useAttrs } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { map, omit } from '@/helpers/commons'
+import { omit } from '@/helpers/commons'
 import type { ArrInnerType } from '@/types/commons'
 import type {
   AnyWritableComponents,

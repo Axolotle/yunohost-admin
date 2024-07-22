@@ -122,7 +122,9 @@ const errorMessage = computed(() => {
     .join('<br>')
 })
 
-const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{
+  ariaDescribedby: string[]
+}>()
 </script>
 
 <template>
@@ -131,10 +133,10 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
     <slot
       v-bind="{
         ...props.props,
+        ariaDescribedby,
+        modelValue: props.modelValue,
         state,
         validation: validation,
-        modelValue: props.modelValue,
-        ariaDescribedby,
       }"
     >
       <!-- if no component was passed as slot, render a component from the props -->
@@ -142,6 +144,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
         v-bind="props.props"
         :is="component"
         v-model="model"
+        :aria-describedby="ariaDescribedby"
         :state="state"
         :validation="validation"
       />
@@ -154,7 +157,6 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate()
     :id="id"
     :label="label"
     :label-for="labelFor || props.props?.id"
-    :label-class="{ 'visually-hidden': asInputGroup }"
     :state="state"
   >
     <template #default="{ ariaDescribedby }">

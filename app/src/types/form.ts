@@ -212,7 +212,7 @@ type BaseFormField<C extends AnyItemComponents> = {
   hr?: boolean
   id?: string
   label?: string
-  props: ItemComponentToItemProps[C]
+  props?: ItemComponentToItemProps[C]
   readonly?: boolean
   // FIXME compute visible JSExpression
   visible?: boolean
@@ -230,6 +230,7 @@ export type FormField<
   link?:
     | { text: string; name: RouteLocationRaw }
     | { text: string; href: string }
+  props: ItemComponentToItemProps[C]
   rules?: FormFieldRules<MV>
   prepend?: string
   readonly?: false

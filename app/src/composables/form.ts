@@ -5,6 +5,7 @@ import type {
   ValidationRuleCollection,
 } from '@vuelidate/core'
 import useVuelidate from '@vuelidate/core'
+import { computedWithControl } from '@vueuse/core'
 import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
 import { computed, inject, provide, reactive, toValue } from 'vue'
 
@@ -41,25 +42,28 @@ export function useTouch(
   return touch
 }
 
-export function useForm<T extends Obj, F extends FormFieldDict<T>>(
-  form: Ref<T>,
-  fields: F,
-) {
+export function useForm<
+  MV extends Obj,
+  FFD extends FormFieldDict<MV> = FormFieldDict<MV>,
+>(form: Ref<MV>, fields: MaybeRefOrGetter<FFD>) {
   const serverErrors = reactive<ServerErrors>({})
   const validByDefault: ValidationRuleCollection = { true: () => true }
-
-  const rules = computed(() => {
-    const validations = Object.keys(form.value).map((key: keyof T) => [
-      key,
-      (fields[key] as FormField).rules ?? validByDefault,
-    ])
-    const rules: ValidationArgs<T> = Object.fromEntries(validations)
-    return {
-      // create a fake validation rule for global state to be able to add $externalResult errors to it
-      global: { true: () => true },
-      form: rules,
-    }
-  })
+  const rules = computedWithControl(
+    () => toValue(fields),
+    () => {
+      const fs = toValue(fields)
+      const validations = Object.keys(form.value).map((key: keyof MV) => [
+        key,
+        (fs[key] as FormField).rules ?? validByDefault,
+      ])
+      const rules: ValidationArgs<MV> = Object.fromEntries(validations)
+      return {
+        // create a fake validation rule for global state to be able to add $externalResult errors to it
+        global: { true: () => true },
+        form: rules,
+      }
+    },
+  )
 
   const v = useVuelidate(
     rules,
@@ -69,10 +73,15 @@ export function useForm<T extends Obj, F extends FormFieldDict<T>>(
 
   function onErrorFn(err: APIError, errorMessage?: string) {
     if (!(err instanceof APIBadRequestError)) throw err
-    if (errorMessage) {
-      serverErrors.global = [errorMessage]
+    if (errorMessage || !err.data.name) {
+      serverErrors.global = [errorMessage || err.message]
     } else {
-    serverErrors[err.data.name ?? 'global'] = [err.message]
+      deepSetErrors(
+        serverErrors,
+        [err.message],
+        'form',
+        ...err.data.name.split('.'),
+      )
     }
   }
 
@@ -84,25 +93,6 @@ export function useForm<T extends Obj, F extends FormFieldDict<T>>(
       e.preventDefault()
       if (!(await v.value.$validate())) return
       fn(onErrorFn, serverErrors)
-    }
-  }
-
-  function deepSetErrors(
-    obj: ServerErrors,
-    value: string[],
-    ...keys: string[]
-  ) {
-    const [k, ...ks] = keys
-    if (ks.length) {
-      if (!(k in obj) && !value.length) {
-        obj[k] = {}
-        deepSetErrors(obj[k] as ServerErrors, value, ...ks)
-      } else if (k in obj) {
-        deepSetErrors(obj[k] as ServerErrors, value, ...ks)
-      }
-    } else {
-      if (!(k in obj) && !value.length) return
-      obj[k] = value
     }
   }
 
@@ -130,4 +120,23 @@ export function useArrayRule<V extends any[], T extends ValidationArgs>(
       return total
     }, {})
   })
+}
+
+export function deepSetErrors(
+  serverErrors: ServerErrors,
+  value: string[],
+  ...keys: string[]
+) {
+  const [k, ...ks] = keys
+  if (ks.length) {
+    if (!(k in serverErrors) && !value.length) {
+      serverErrors[k] = {}
+      deepSetErrors(serverErrors[k] as ServerErrors, value, ...ks)
+    } else if (k in serverErrors) {
+      deepSetErrors(serverErrors[k] as ServerErrors, value, ...ks)
+    }
+  } else {
+    if (!(k in serverErrors) && !value.length) return
+    serverErrors[k] = value
+  }
 }

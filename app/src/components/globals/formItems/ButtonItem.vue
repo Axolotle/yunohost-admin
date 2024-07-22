@@ -10,7 +10,9 @@ const props = withDefaults(defineProps<ButtonItemProps>(), {
   type: 'success',
 })
 
-const emit = defineEmits(['action'])
+const emit = defineEmits<{
+  action: [value: ButtonItemProps['id']]
+}>()
 
 const icon = computed(() => {
   const icons = {
@@ -30,7 +32,7 @@ const icon = computed(() => {
     :variant="type"
     :disabled="!enabled"
     class="d-block mb-3"
-    @click="emit('action', $event)"
+    @click="emit('action', id)"
   >
     <YIcon :iname="icon" class="me-2" />
     <span v-html="label" />

@@ -86,6 +86,7 @@ const fields = reactive({
   } satisfies FieldProps<'AdressItem', Form['mail']>,
 
   mailbox_quota: {
+    append: 'M',
     component: 'InputItem',
     label: t('user_mailbox_quota'),
     description: t('mailbox_quota_description'),

@@ -1,3 +1,6 @@
+import type { Breakpoint } from 'bootstrap-vue-next'
+import type { RouteLocationNamedRaw } from 'vue-router'
+
 export type Obj<T = any> = Record<string, T>
 
 // Vue
@@ -16,7 +19,7 @@ export type Cols = Partial<Record<Breakpoint, boolean | ColsNumbers | 'auto'>>
 // CUSTOM
 
 export type CustomRoute = {
-  to: RouteLocationRaw
+  to: RouteLocationNamedRaw
   text: string
   icon?: string
 }

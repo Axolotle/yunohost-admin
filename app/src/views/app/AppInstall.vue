@@ -95,7 +95,7 @@ function onQueriesResponse(catalog: any, _app: any) {
     return key === 'ram' || requirements[key].pass
   })
 
-  const app = {
+  const app_ = {
     id,
     name,
     alternativeTo:
@@ -152,7 +152,7 @@ function onQueriesResponse(catalog: any, _app: any) {
     validations,
   } = formatYunoHostArguments(_app.install)
 
-  app.value = app
+  app.value = app_
   fieds.value = fields
   Object.assign(form, form_)
   validations.value = validations

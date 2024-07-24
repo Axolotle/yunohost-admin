@@ -4,14 +4,17 @@
   generic="
     MV extends Obj,
     FFD extends FormFieldDict<MV>,
-    V extends Validation<{ form: MV; global: null }>
+    V extends Validation<
+      ValidationArgs<unknown>,
+      { form: Ref<MV>; global: null }
+    >
   "
 >
-import type { Validation } from '@vuelidate/core'
+import type { Validation, ValidationArgs } from '@vuelidate/core'
 import { computed, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import { entries } from '@/helpers/commons'
+import { toEntries } from '@/helpers/commons'
 import type { Obj, VueClass } from '@/types/commons'
 import type {
   AnyDisplayComponents,
@@ -74,12 +77,12 @@ const { t } = useI18n()
 
 const globalErrorFeedback = computed(() => {
   const v = props.validations
-  if (!v) return
+  if (!v) return ''
   const externalResults = toValue(v.global.$externalResults[0]?.$message)
   return externalResults ?? (v.form.$error ? t('form_errors.invalid_form') : '')
 })
 
-const fields = computed(() => (props.fields ? entries(props.fields) : []))
+const fields = computed(() => (props.fields ? toEntries(props.fields) : []))
 
 function onModelUpdate(key: keyof MV, value: MV[keyof MV]) {
   emit('update:modelValue', {
@@ -161,7 +164,7 @@ function onModelUpdate(key: keyof MV, value: MV[keyof MV]) {
     <template v-if="!noFooter" #buttons>
       <slot name="buttons">
         <BButton type="submit" variant="success" :form="id">
-          {{ submitText ? submitText : $t('save') }}
+          {{ submitText ?? $t('save') }}
         </BButton>
       </slot>
     </template>

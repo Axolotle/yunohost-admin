@@ -6,7 +6,13 @@ import type {
 } from '@vuelidate/core'
 import useVuelidate from '@vuelidate/core'
 import { computedWithControl } from '@vueuse/core'
-import type { ComputedRef, InjectionKey, MaybeRefOrGetter, Ref } from 'vue'
+import type {
+  ComputedRef,
+  InjectionKey,
+  MaybeRefOrGetter,
+  Ref,
+  WritableComputedRef,
+} from 'vue'
 import { computed, inject, provide, reactive, toValue } from 'vue'
 
 import { APIBadRequestError, type APIError } from '@/api/errors'
@@ -45,7 +51,7 @@ export function useTouch(
 export function useForm<
   MV extends Obj,
   FFD extends FormFieldDict<MV> = FormFieldDict<MV>,
->(form: Ref<MV>, fields: MaybeRefOrGetter<FFD>) {
+>(form: Ref<MV> | WritableComputedRef<MV>, fields: MaybeRefOrGetter<FFD>) {
   const serverErrors = reactive<ServerErrors>({})
   const validByDefault: ValidationRuleCollection = { true: () => true }
   const rules = computedWithControl(

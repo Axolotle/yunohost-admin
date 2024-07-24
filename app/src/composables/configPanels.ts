@@ -1,11 +1,15 @@
 import evaluate from 'simple-evaluate'
-import { computed, ref, toValue, type MaybeRefOrGetter, type Ref } from 'vue'
+import type { MaybeRefOrGetter, Ref } from 'vue'
+import { computed, ref, toValue, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
+import { APIBadRequestError, APIError } from '@/api/errors'
+import { deepSetErrors, useForm } from '@/composables/form'
 import { asUnreffed, isObjectLiteral } from '@/helpers/commons'
 import * as validators from '@/helpers/validators'
-import { formatI18nField } from '@/helpers/yunohostArguments'
-import type { MergeUnion, Obj } from '@/types/commons'
+import { formatFormData, formatI18nField } from '@/helpers/yunohostArguments'
+import type { KeyOfStr, MergeUnion, Obj } from '@/types/commons'
 import type {
   AnyFormField,
   ConfigPanel,
@@ -217,7 +221,7 @@ function formatOption(option: AnyOption, form: Ref<Obj>): AnyFormField {
  * @param options - a core Option array written by a packager
  * @return An object with form and fields
  */
-function formatOptions<MV extends Obj>(
+export function formatOptions<MV extends Obj>(
   options: AnyOption[],
 ): {
   fields: FormFieldDict<MV>
@@ -368,4 +372,93 @@ function useEvaluation(expression: string, form: MaybeRefOrGetter<Obj>) {
       return false
     }
   })
+}
+
+export type OnPanelApply<MV extends Obj = Obj> = (
+  data: { panelId: keyof MV; form: Obj; action?: string },
+  onError: (err: APIError, errorMessage?: string) => void,
+) => void
+
+export function useConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>>(
+  config: ConfigPanels<NestedMV, MV>,
+  tabId: MaybeRefOrGetter<keyof MV | undefined>,
+  onPanelApply: OnPanelApply<MV>,
+) {
+  const router = useRouter()
+  watch(
+    () => toValue(tabId),
+    (id) => {
+      if (!id) {
+        router.replace({ params: { tabId: config.panels[0].id } })
+      }
+    },
+    { immediate: true },
+  )
+
+  const panelId = computed(() => toValue(tabId) || config.panels[0].id)
+  const panel = computed(() => {
+    return config.panels.find((panel) => panel.id === panelId.value)!
+  })
+
+  const form = computed({
+    get: () => config.forms[panelId.value].value,
+    set: (form) => (config.forms[panelId.value].value = form),
+  })
+
+  const { v, serverErrors } = useForm<NestedMV>(form, () => panel.value.fields)
+
+  function onErrorFn(err: APIError) {
+    if (!(err instanceof APIBadRequestError)) throw err
+    if (err.data.name) {
+      deepSetErrors(
+        serverErrors,
+        [err.message],
+        'form',
+        // FIXME probably need to remove panel + section id
+        ...err.data.name.split('.'),
+      )
+    } else {
+      serverErrors.global = [err.message]
+    }
+  }
+
+  const onBeforePanelApply = async (
+    actionId?: KeyOfStr<typeof panel.value.fields>,
+  ) => {
+    const panelId = panel.value.id
+    let form: NestedMV | Partial<NestedMV> = config.forms[panelId].value
+    let action: undefined | string = undefined
+
+    if (actionId) {
+      const section = panel.value.sections.find((section) =>
+        section.fields.includes(actionId),
+      )!
+      action = `${panelId}.${section.id}.${actionId}`
+      const actionForm: Partial<NestedMV> = {}
+      for (const id of section.fields) {
+        if (id in form) {
+          // FIXME check visible? skip validate and value if not visible?
+          if (!(await v.value.form[id].$validate())) return
+          actionForm[id] = form[id]
+        }
+      }
+      form = actionForm
+    } else {
+      if (!(await v.value.form.$validate())) return
+    }
+    form = await formatFormData(form, {
+      removeEmpty: false,
+      removeNull: true,
+    })
+
+    onPanelApply({ panelId, form, action }, onErrorFn)
+  }
+
+  return {
+    form,
+    panel,
+    routes: config.routes,
+    v,
+    onPanelApply: onBeforePanelApply,
+  }
 }

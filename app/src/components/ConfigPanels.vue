@@ -3,9 +3,7 @@
   lang="ts"
   generic="NestedMV extends Obj, MV extends Obj<NestedMV>"
 >
-import type { Validation, ValidationArgs } from '@vuelidate/core'
-import type { Ref } from 'vue'
-
+import type { FormValidation } from '@/composables/form'
 import type { KeyOfStr, Obj } from '@/types/commons'
 import type { ConfigPanel, ConfigPanels } from '@/types/configPanels'
 
@@ -17,10 +15,7 @@ const props = defineProps<{
   // modelValue: MV[keyof MV]
   panel: ConfigPanel<NestedMV, MV>
   routes: ConfigPanels<NestedMV, MV>['routes']
-  validations: Validation<
-    ValidationArgs<unknown>,
-    { form: Ref<NestedMV>; global: null }
-  >
+  validations: FormValidation<NestedMV>
 }>()
 
 const emit = defineEmits<{

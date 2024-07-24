@@ -1,24 +1,12 @@
-<script
-  setup
-  lang="ts"
-  generic="
-    MV extends Obj,
-    FFD extends FormFieldDict<MV>,
-    V extends Validation<
-      ValidationArgs<unknown>,
-      { form: Ref<MV>; global: null }
-    >
-  "
->
-import type { Validation, ValidationArgs } from '@vuelidate/core'
+<script setup lang="ts" generic="MV extends Obj, FFD extends FormFieldDict<MV>">
 import { createReusableTemplate } from '@vueuse/core'
-import type { Ref } from 'vue'
 import { computed, reactive, toValue } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-import type { ConfigSection } from '@/types/configPanels'
+import type { FormValidation } from '@/composables/form'
 import { toEntries } from '@/helpers/commons'
 import type { KeyOfStr, Obj, VueClass } from '@/types/commons'
+import type { ConfigSection } from '@/types/configPanels'
 import type {
   AnyDisplayComponents,
   AnyWritableComponents,
@@ -32,7 +20,7 @@ const props = withDefaults(
     id?: string
     modelValue?: MV
     fields?: FFD
-    validations?: V
+    validations?: FormValidation<MV>
     submitText?: string
     inline?: boolean
     formClasses?: VueClass

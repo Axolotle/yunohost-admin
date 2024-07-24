@@ -1,15 +1,20 @@
 import evaluate from 'simple-evaluate'
-import type { MaybeRefOrGetter, Ref } from 'vue'
+import type {
+  ComputedRef,
+  MaybeRefOrGetter,
+  Ref,
+  WritableComputedRef,
+} from 'vue'
 import { computed, ref, toValue, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 import { APIBadRequestError, APIError } from '@/api/errors'
-import { deepSetErrors, useForm } from '@/composables/form'
+import { deepSetErrors, useForm, type FormValidation } from '@/composables/form'
 import { asUnreffed, isObjectLiteral } from '@/helpers/commons'
 import * as validators from '@/helpers/validators'
 import { formatFormData, formatI18nField } from '@/helpers/yunohostArguments'
-import type { KeyOfStr, MergeUnion, Obj } from '@/types/commons'
+import type { CustomRoute, KeyOfStr, MergeUnion, Obj } from '@/types/commons'
 import type {
   AnyFormField,
   ConfigPanel,
@@ -375,15 +380,26 @@ function useEvaluation(expression: string, form: MaybeRefOrGetter<Obj>) {
 }
 
 export type OnPanelApply<MV extends Obj = Obj> = (
-  data: { panelId: keyof MV; form: Obj; action?: string },
+  data: { panelId: keyof MV; data: Obj; action?: string },
   onError: (err: APIError, errorMessage?: string) => void,
 ) => void
+
+export type ConfigPanelsProps<
+  NestedMV extends Obj = Obj,
+  MV extends Obj<NestedMV> = Obj<NestedMV>,
+> = {
+  form: WritableComputedRef<NestedMV>
+  panel: ComputedRef<ConfigPanel<NestedMV, MV, FormFieldDict<NestedMV>>>
+  routes: CustomRoute[]
+  v: Ref<FormValidation<NestedMV>>
+  onPanelApply: (actionId?: KeyOfStr<FormFieldDict<NestedMV>>) => void
+}
 
 export function useConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>>(
   config: ConfigPanels<NestedMV, MV>,
   tabId: MaybeRefOrGetter<keyof MV | undefined>,
   onPanelApply: OnPanelApply<MV>,
-) {
+): ConfigPanelsProps<NestedMV, MV> {
   const router = useRouter()
   watch(
     () => toValue(tabId),
@@ -423,7 +439,7 @@ export function useConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>>(
   }
 
   const onBeforePanelApply = async (
-    actionId?: KeyOfStr<typeof panel.value.fields>,
+    actionId?: KeyOfStr<FormFieldDict<NestedMV>>,
   ) => {
     const panelId = panel.value.id
     let form: NestedMV | Partial<NestedMV> = config.forms[panelId].value
@@ -446,12 +462,12 @@ export function useConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>>(
     } else {
       if (!(await v.value.form.$validate())) return
     }
-    form = await formatFormData(form, {
+    const data = await formatFormData(form, {
       removeEmpty: false,
       removeNull: true,
     })
 
-    onPanelApply({ panelId, form, action }, onErrorFn)
+    onPanelApply({ panelId, data, action }, onErrorFn)
   }
 
   return {

@@ -140,6 +140,7 @@ function formatOption(option: AnyOption, form: Ref<Obj>): AnyFormField {
       readonly: option.readonly,
       rules,
       visible,
+      description: formatI18nField(option.help),
     }
 
     // We don't care about component props in case of readonly

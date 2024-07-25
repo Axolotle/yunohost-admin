@@ -23,10 +23,11 @@ const emit = defineEmits<{
   'update:modelValue': [modelValue: MV[keyof MV]]
 }>()
 
-defineSlots<{
-  'tab-top': any
-  'tab-before': any
-  'tab-after': any
+const slots = defineSlots<{
+  'tab-top'?: any
+  'tab-before'?: any
+  default?: any
+  'tab-after'?: any
 }>()
 
 const modelValue = defineModel<NestedMV>({ required: true })
@@ -69,6 +70,9 @@ const modelValue = defineModel<NestedMV>({ required: true })
       <template #before-form>
         <slot name="tab-before" />
       </template>
+      <template v-if="slots.default" #default>
+        <slot name="default" />
+      </template>
       <template #after-form>
         <slot name="tab-after" />
       </template>
@@ -77,6 +81,7 @@ const modelValue = defineModel<NestedMV>({ required: true })
   <YCard v-else :title="routes[0].text" :icon="routes[0].icon">
     <slot name="tab-top" />
     <slot name="tab-before" />
+    <slot name="default" />
     <slot name="tab-after" />
   </YCard>
 </template>

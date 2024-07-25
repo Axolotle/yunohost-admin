@@ -39,3 +39,6 @@ export type MergeUnion<U extends Record<string, unknown>> = {
       : never
     : never
 }
+export type Prettify<T> = {
+  [K in keyof T]: T[K]
+} & {}

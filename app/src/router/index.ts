@@ -35,15 +35,17 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'post-install' && store.getters.installed) {
     return next('/')
   }
+  next()
   // Allow if connected or route is not protected
-  if (store.getters.connected || to.meta.noAuth) {
-    next()
-  } else {
-    store.dispatch('DISCONNECT', to)
-  }
+  // if (store.getters.connected || to.meta.noAuth) {
+  //   next()
+  // } else {
+  //   store.dispatch('DISCONNECT', to)
+  // }
 })
 
 router.afterEach((to, from) => {
+  console.log(from, to)
   store.dispatch('UPDATE_ROUTER_KEY', { to, from })
   store.dispatch('UPDATE_BREADCRUMB', { to, from })
 })

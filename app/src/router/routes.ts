@@ -14,12 +14,33 @@ import ToolList from '@/views/tool/ToolList.vue'
 
 const routes = [
   {
+    // name: 'home',
+    path: '/:tabId?',
     name: 'home',
-    path: '/',
-    component: HomeView,
+    props: true,
+    component: () => import('@/views/ViewTest.vue'),
     meta: {
-      args: { trad: 'home' },
+      routerParams: [],
+      args: { trad: 'tools_yunohost_settings' },
+      breadcrumb: ['home'],
     },
+    // children: [
+    //   {
+    //     path: '',
+    //     component: () => import('@/components/ConfigPanel.vue'),
+    //     props: true,
+    //     meta: {
+    //       routerParams: [],
+    //       args: { trad: 'tools_yunohost_settings' },
+    //       breadcrumb: ['tool-list', 'tool-settings'],
+    //     },
+    //   },
+    // ],
+    // props: true,
+    // component: HomeView,
+    // meta: {
+    //   args: { trad: 'home' },
+    // },
   },
 
   {

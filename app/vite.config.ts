@@ -87,6 +87,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
   }
+  console.log(env)
 
   if (mode === 'production') {
     return {
@@ -97,27 +98,42 @@ export default defineConfig(({ command, mode }) => {
     return {
       ...config,
       server: {
-        port: 8080,
-        host: env.VITE_IP,
-        https: {
-          // Use already created cert from yunohost instance
-          key: fs.readFileSync('/etc/yunohost/certs/yunohost.org/key.pem'),
-          cert: fs.readFileSync('/etc/yunohost/certs/yunohost.org/crt.pem'),
-        },
-        fs: {
-          // Needed for special ynh-dev context where node_modules is symlinked
-          allow: [
-            '/ynh-dev/yunohost-admin/app',
-            '/var/cache/ynh-dev/yunohost-admin/node_modules',
-          ],
-        },
+        // port: 8080,
+        // host: env.VITE_IP,
+        // https: {
+        //   // Use already created cert from yunohost instance
+        //   key: fs.readFileSync('/etc/yunohost/certs/yunohost.org/key.pem'),
+        //   cert: fs.readFileSync('/etc/yunohost/certs/yunohost.org/crt.pem'),
+        // },
+        // fs: {
+        //   // Needed for special ynh-dev context where node_modules is symlinked
+        //   allow: [
+        //     '/ynh-dev/yunohost-admin/app',
+        //     '/var/cache/ynh-dev/yunohost-admin/node_modules',
+        //   ],
+        // },
         proxy: {
+          // '/yunohost/api/messages': {
+          //   target: `wss://${env.VITE_IP}`,
+          //   secure: false,
+          //   changeOrigin: true,
+          //   ws: true,
+          //   rewrite: (path) => {
+          //     console.log('PROXY', path)
+          //     // path.replace(/^\/api/, '')
+          //     return path
+          //   },
+          // },
           '/yunohost': {
             target: `https://${env.VITE_IP}`,
-            ws: true,
+            // ws: true,
             logLevel: 'info',
             secure: false,
           },
+          // '/applogos': {
+          //   target: `https://${env.VITE_IP}/yunohost/admin`,
+          //   secure: false,
+          // },
         },
       },
     }

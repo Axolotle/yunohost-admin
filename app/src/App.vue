@@ -5,6 +5,8 @@ import { useStore } from 'vuex'
 import { useStoreGetters } from '@/store/utils'
 import { HistoryConsole, ViewLockOverlay } from '@/views/_partials'
 
+import ViewTest from '@/views/ViewTest.vue'
+
 const store = useStore()
 const {
   connected,
@@ -21,7 +23,7 @@ async function logout() {
   store.dispatch('LOGOUT')
 }
 
-store.dispatch('ON_APP_CREATED')
+// store.dispatch('ON_APP_CREATED')
 
 onMounted(() => {
   const copypastaCode = ['ArrowDown', 'ArrowDown', 'ArrowUp', 'ArrowUp']
@@ -136,6 +138,7 @@ onMounted(() => {
         </RouterView>
       </main>
     </ViewLockOverlay>
+    <!-- <ViewTest /> -->
 
     <BModalOrchestrator />
 

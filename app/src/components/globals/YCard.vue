@@ -79,7 +79,7 @@ const visible = ref(!props.collapsed)
     </template>
 
     <BCollapse v-if="collapsable" :visible="visible">
-      <slot v-if="'no-body' in $attrs" name="default" />
+      <slot v-if="noBody" name="default" />
       <BCardBody v-else>
         <slot name="default" />
       </BCardBody>

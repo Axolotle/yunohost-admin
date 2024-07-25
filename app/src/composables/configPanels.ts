@@ -13,7 +13,7 @@ import { APIBadRequestError, APIError } from '@/api/errors'
 import { deepSetErrors, useForm, type FormValidation } from '@/composables/form'
 import { asUnreffed, isObjectLiteral } from '@/helpers/commons'
 import * as validators from '@/helpers/validators'
-import { formatFormData, formatI18nField } from '@/helpers/yunohostArguments'
+import { formatForm, formatI18nField } from '@/helpers/yunohostArguments'
 import type { CustomRoute, KeyOfStr, MergeUnion, Obj } from '@/types/commons'
 import type {
   AnyFormField,
@@ -256,14 +256,16 @@ function formatConfigPanel<NestedMV extends Obj, MV extends Obj<NestedMV>>(
   form: Ref<NestedMV>
   panel: ConfigPanel<NestedMV, MV>
 } {
-  const options = panel.sections.flatMap((section) => section.options)
-  const { form, fields } = formatOptions<NestedMV>(options)
+  const options = panel.sections?.flatMap((section) => section.options)
+  const { form, fields } = options
+    ? formatOptions<NestedMV>(options)
+    : { form: ref({}) as Ref<NestedMV>, fields: {} as FormFieldDict<NestedMV> }
   let hasApplyButton = false
 
-  const sections = panel.sections.map((section) => {
-    const sectionFieldsIds = section.options.map(
-      (option) => option.id,
-    ) as ConfigPanel<NestedMV, MV>['sections'][number]['fields']
+  const sections = panel.sections?.map((section) => {
+    const sectionFieldsIds = section.options.map<
+      KeyOfStr<FormFieldDict<NestedMV>>
+    >((option) => option.id)
 
     if (
       !section.is_action_section &&
@@ -446,7 +448,7 @@ export function useConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>>(
     let action: undefined | string = undefined
 
     if (actionId) {
-      const section = panel.value.sections.find((section) =>
+      const section = panel.value.sections!.find((section) =>
         section.fields.includes(actionId),
       )!
       action = `${panelId}.${section.id}.${actionId}`

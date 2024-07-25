@@ -70,7 +70,7 @@ export type ConfigPanel<
   id: KeyOfStr<MV>
   icon?: string
   name: string
-  sections: ConfigSection<NestedMV, FFD>[]
+  sections?: ConfigSection<NestedMV, FFD>[]
 }
 
 export type ConfigPanels<NestedMV extends Obj, MV extends Obj<NestedMV>> = {

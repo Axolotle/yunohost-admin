@@ -46,12 +46,13 @@ function scrollToEnd() {
 }
 
 function onScroll(e: Event) {
-  const target = e.target as Element
+  const target = e.target as HTMLElement
   auto.value = target.scrollHeight === target.scrollTop + target.clientHeight
 }
 </script>
 <template>
   <BListGroup
+    ref="rootElem"
     flush
     :class="{ 'fixed-height': fixedHeight, bordered: bordered }"
     @scroll="onScroll"

@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { useStore } from 'vuex'
-
 import { useUsersAndGroups } from '@/composables/data'
 import { useInfos } from '@/composables/useInfos'
 import { useInitialQueries } from '@/composables/useInitialQueries'
 import { useSearch } from '@/composables/useSearch'
 
-const store = useStore()
 const { loading } = useInitialQueries([
   {
     uri: 'users?fields=username&fields=fullname&fields=mail&fields=mailbox-quota&fields=groups',
@@ -22,8 +19,8 @@ const [search, filteredUsers] = useSearch(
 )
 
 function downloadExport() {
-  const host = store.getters.host
-  window.open(`https://${host}/yunohost/api/users/export`, '_blank')
+  const { host } = useInfos()
+  window.open(`https://${host.value}/yunohost/api/users/export`, '_blank')
 }
 </script>
 

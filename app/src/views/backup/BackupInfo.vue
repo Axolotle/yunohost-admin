@@ -127,9 +127,9 @@ async function deleteBackup() {
 }
 
 function downloadBackup() {
-  const host = store.getters.host
+  const { host } = useInfos()
   window.open(
-    `https://${host}/yunohost/api/backups/${props.name}/download`,
+    `https://${host.value}/yunohost/api/backups/${props.name}/download`,
     '_blank',
   )
 }

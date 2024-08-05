@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { useInfos } from '@/composables/useInfos'
 import { useRequests } from '@/composables/useRequests'
 import { useSettings } from '@/composables/useSettings'
-import store from '@/store'
 import routes from './routes'
 
 const router = createRouter({
@@ -40,12 +39,12 @@ router.beforeEach((to, from, next) => {
     dismissModal(currentRequest.value.id)
   }
 
-  const { installed, onLogout } = useInfos()
+  const { installed, connected, onLogout } = useInfos()
   if (to.name === 'post-install' && installed.value) {
     return next('/')
   }
   // Allow if connected or route is not protected
-  if (store.getters.connected || to.meta.noAuth) {
+  if (connected.value || to.meta.noAuth) {
     next()
   } else {
     onLogout(to)

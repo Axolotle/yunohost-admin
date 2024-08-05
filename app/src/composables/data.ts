@@ -17,7 +17,7 @@ function arrayOrNull<T extends any[]>(items: T): T | null {
   return items.length ? items : null
 }
 
-const useDataStore = createGlobalState(() => {
+const useData = createGlobalState(() => {
   const users = ref<Obj<UserItem>>({})
   const userDetails = ref<Obj<UserDetails>>({})
   const groups = ref<Obj<Group>>({})
@@ -29,7 +29,7 @@ const useDataStore = createGlobalState(() => {
   function update(
     method: RequestMethod,
     payload: any,
-    key: DataStoreKeys,
+    key: DataKeys,
     param?: string,
   ) {
     if (key === 'users') {
@@ -103,7 +103,7 @@ const useDataStore = createGlobalState(() => {
 })
 
 export function useUsersAndGroups(username?: MaybeRefOrGetter<string>) {
-  const { users, userDetails } = useDataStore()
+  const { users, userDetails } = useData()
   return {
     users: computed(() => {
       return arrayOrNull(Object.values(users.value))
@@ -119,7 +119,7 @@ export function useUsersAndGroups(username?: MaybeRefOrGetter<string>) {
 }
 
 export function useDomains(domain_?: MaybeRefOrGetter<string>) {
-  const { mainDomain, domains, domainDetails } = useDataStore()
+  const { mainDomain, domains, domainDetails } = useData()
 
   const orderedDomains = computed(() => {
     if (!domains.value) return
@@ -179,7 +179,7 @@ type StoreKeysParam =
   | 'mainDomain'
   | 'domainDetails'
   | 'domains'
-type DataStoreKeys = StoreKeys | StoreKeysParam
+type DataKeys = StoreKeys | StoreKeysParam
 export type StorePath = `${StoreKeys}` | `${StoreKeysParam}.${string}`
 
 export function useCache<T extends any = any>(
@@ -189,18 +189,18 @@ export function useCache<T extends any = any>(
   const [key, param] = cachePath.split('.') as
     | [StoreKeys, undefined]
     | [StoreKeysParam, string]
-  const store = useDataStore()
+  const data = useData()
   // FIXME get global cache policy setting
   // Add noCache arg? not used
 
-  if (!(key in store)) {
+  if (!(key in data)) {
     throw new Error('Trying to get cache of inexistant data')
   }
-  const data = store[key].value
-  let content = data as T
+  const d = data[key].value
+  let content = d as T
   if (param) {
-    if (isObjectLiteral(data) && !Array.isArray(data)) {
-      content = data[param] as T
+    if (isObjectLiteral(d) && !Array.isArray(d)) {
+      content = d[param] as T
     } else {
       throw new Error('Trying to get param on non object data')
     }
@@ -208,6 +208,17 @@ export function useCache<T extends any = any>(
 
   return {
     content,
-    update: (payload: T) => store.update(method, payload, key, param),
+    update: (payload: T) => data.update(method, payload, key, param),
+  }
+}
+
+export function resetCache(keys: DataKeys[]) {
+  const data = useData()
+  for (const key of keys) {
+    if (['domains', 'mainDomain'].includes(key)) {
+      data[key].value = undefined
+    } else {
+      data[key].value = {}
+    }
   }
 }

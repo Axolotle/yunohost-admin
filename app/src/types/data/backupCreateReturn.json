@@ -1,0 +1,15 @@
+{
+    "name": "20240806-141848",
+    "size": 20194139,
+    "results": {
+        "system": {
+            "conf_ynh_certs": "Success",
+            "conf_manually_modified_files": "Success",
+            "conf_ldap": "Success",
+            "conf_ynh_settings": "Success",
+            "data_mail": "Success",
+            "data_xmpp": "Success"
+        },
+        "apps": { "dokuwiki": "Success" }
+    }
+}

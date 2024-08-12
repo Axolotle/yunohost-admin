@@ -1,3 +1,5 @@
+import type { StateVariant } from '@/types/commons'
+
 export type UserItem = {
   username: string
   fullname: string
@@ -9,6 +11,7 @@ export type UserDetails = {
   username: string
   fullname: string
   mail: string
+  // loginShell: '/bin/bash'
   'mail-aliases': string[]
   'mail-forward': string[]
   'mailbox-quota': { limit: string; use: string }
@@ -26,14 +29,16 @@ export type Permission = {
 export type Group = {
   members: string[]
   permissions: string[]
+  // 'mail-aliases': string[]
 }
+// FIXME group and permission updates? looks like we do not mutate it on changes
 export type DomainDetail = {
   certificate: {
     subject: string
     CA_name: string
-    CA_type: string // enumlike
+    CA_type: 'selfsigned' | 'letsencrypt' | 'other'
     validity: number
-    style: string // enumlike
+    style: Exclude<StateVariant, 'info'>
     summary: string // enum
     ACME_eligible: boolean
   }

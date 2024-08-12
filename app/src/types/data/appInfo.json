@@ -1,0 +1,289 @@
+{
+    "description": "Stockage en ligne, plateforme de partage de fichiers et diverses autres applications",
+    "name": "Nextcloud",
+    "version": "29.0.4~ynh1",
+    "domain_path": "demo.yunohost.org/nextcloud",
+    "logo": "7619f283fa6ce9e0c6ae30cef5bb7cb47b926e9abccda4009a70e54579aa915a",
+    "upgradable": "no",
+    "settings": {
+        "admin": "demo",
+        "app": "nextcloud",
+        "checksum__etc_cron.d_nextcloud": "b1c57cf68256db3a89d20b56c10d04ea",
+        "checksum__etc_fail2ban_filter.d_nextcloud.conf": "6f17123832efe377a229ead060dc0764",
+        "checksum__etc_fail2ban_jail.d_nextcloud.conf": "48d3084432c0d5f1091499097d0cbb10",
+        "checksum__etc_nginx_conf.d_demo.yunohost.org.d_nextcloud.conf": "855e59ddfc11c73aed6b0853bac5c8ad",
+        "checksum__etc_php_8.2_fpm_pool.d_nextcloud.conf": "4a1372aab3874b5e009a4f6bd533abf1",
+        "checksum__etc_php_8.3_fpm_pool.d_nextcloud.conf": "5a83405968da90d526bbcef6522e29c0",
+        "checksum__var_www_nextcloud_config.json": "1fff4a8b288850b4ab5484ed6f789573",
+        "checksum__var_www_nextcloud_config_config.php": "806a73fec908266ff311a9bdd68ce35b",
+        "checksum__var_www_nextcloud_config_install.json": "8ab5d0be6af622eaf64875fb6a00c5b5",
+        "current_revision": "79bbe7d11e53dd0dc6d6b63c20eb88ef619abfe9",
+        "data_dir": "/home/yunohost.app/nextcloud",
+        "db_name": "nextcloud",
+        "db_pwd": "5c3cb60e79ff3d696b346fd5",
+        "db_user": "nextcloud",
+        "domain": "demo.yunohost.org",
+        "fpm_config_dir": "/etc/php/8.3/fpm",
+        "fpm_dedicated_service": "0",
+        "fpm_footprint": "high",
+        "fpm_service": "php8.3-fpm",
+        "fpm_usage": "medium",
+        "id": "nextcloud",
+        "install_dir": "/var/www/nextcloud",
+        "install_time": 1713332422,
+        "mail_pwd": "06dcaf6c94ad8b5c4077e90b",
+        "path": "/nextcloud",
+        "phpflags": "--define apc.enable_cli=1",
+        "phpversion": "8.3",
+        "system_addressbook_exposed": "1",
+        "update_time": 1722391168,
+        "user_home": 0
+    },
+    "setting_path": "/etc/yunohost/apps/nextcloud",
+    "manifest": {
+        "packaging_format": 2.0,
+        "id": "nextcloud",
+        "name": "Nextcloud",
+        "description": {
+            "en": "Online storage, file sharing platform and various other applications",
+            "fr": "Stockage en ligne, plateforme de partage de fichiers et diverses autres applications"
+        },
+        "version": "29.0.4~ynh1",
+        "maintainers": ["kay0u"],
+        "upstream": {
+            "license": "AGPL-3.0",
+            "website": "https://nextcloud.com",
+            "demo": "https://demo.nextcloud.com/",
+            "admindoc": "https://docs.nextcloud.com/server/stable/admin_manual/",
+            "userdoc": "https://docs.nextcloud.com/server/latest/user_manual/en/",
+            "code": "https://github.com/nextcloud/server",
+            "cpe": "cpe:2.3:a:nextcloud:nextcloud"
+        },
+        "integration": {
+            "yunohost": ">= 11.2",
+            "architectures": ["amd64", "arm64", "armhf"],
+            "multi_instance": true,
+            "ldap": true,
+            "sso": true,
+            "disk": "650M",
+            "ram": { "build": "250M", "runtime": "512M" }
+        },
+        "install": {
+            "domain": {
+                "type": "domain",
+                "id": "domain",
+                "ask": "Choisissez le domaine sur lequel vous souhaitez installer cette application"
+            },
+            "path": {
+                "type": "path",
+                "default": "/nextcloud",
+                "id": "path",
+                "ask": "Choisissez le chemin d'URL (apr\u00e8s le domaine) o\u00f9 cette application doit \u00eatre install\u00e9e"
+            },
+            "admin": {
+                "type": "user",
+                "id": "admin",
+                "ask": "Choisissez un compte administrateur pour cette application"
+            },
+            "init_main_permission": {
+                "help": {
+                    "en": "You must activate 'Visitors' if you want to connect Nextcloud Desktop client to Nextcloud server. This can be changed later via the webadmin.",
+                    "fr": "Vous devez activer 'Visiteurs' si vous souhaitez connecter le client Nextcloud Desktop au serveur Nextcloud. Cela peut \u00eatre modifi\u00e9 ult\u00e9rieurement via l'administrateur Web."
+                },
+                "type": "group",
+                "default": "visitors",
+                "id": "init_main_permission",
+                "ask": "Qui doit avoir acc\u00e8s \u00e0 cette application\u202f? (Ceci peut \u00eatre modifi\u00e9 ult\u00e9rieurement)"
+            },
+            "user_home": {
+                "ask": {
+                    "en": "Access the users home folder from Nextcloud?",
+                    "fr": "Acc\u00e9der au dossier personnel des utilisateurs depuis Nextcloud ?"
+                },
+                "type": "boolean",
+                "default": false,
+                "id": "user_home"
+            },
+            "system_addressbook_exposed": {
+                "ask": {
+                    "en": "Should there be a system address book listing all users, accessible by all users?",
+                    "fr": "Devrait-il y avoir un carnet d'adresses syst\u00e8me listant tous les comptes, accessible par tous les comptes ?"
+                },
+                "type": "boolean",
+                "default": true,
+                "id": "system_addressbook_exposed"
+            }
+        },
+        "resources": {
+            "sources": {
+                "main": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-29.0.4.tar.bz2",
+                    "sha256": "19c469e264b31ee80400f8396460854546569e88db4c15fc0854e192f96027eb"
+                },
+                "28": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-28.0.8.tar.bz2",
+                    "sha256": "55a2f745fcc8f01b5816b23333f1e3014d2040a66794e132ddd0d219a37be53a",
+                    "prefetch": false
+                },
+                "27": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-27.1.11.tar.bz2",
+                    "sha256": "4edd2570f4c83442f8f0f0616fb774ed2663b11cf9f6ea49e795ab43aeef9645",
+                    "prefetch": false
+                },
+                "26": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-26.0.13.tar.bz2",
+                    "sha256": "0a362df7a1233348f99d1853fd7e79f0667b552c145dc45012fab54ac31c79ae",
+                    "prefetch": false
+                },
+                "25": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-25.0.13.tar.bz2",
+                    "sha256": "387bac148a696244f1ec02698a082d408283a875b3de85eb9719dd4493eebe33",
+                    "prefetch": false
+                },
+                "24": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-24.0.12.tar.bz2",
+                    "sha256": "2f093bdf7d34faf38d22f38a5e11f3aee32746ff4add3df17c790b9b36390836",
+                    "prefetch": false
+                },
+                "23": {
+                    "url": "https://download.nextcloud.com/server/releases/nextcloud-23.0.12.tar.bz2",
+                    "sha256": "ad3637fd987e9f1ed5bd5dbd177bdce1e39228e3daf95bc4a3c590d4b1522b1e",
+                    "prefetch": false
+                }
+            },
+            "system_user": { "allow_email": true },
+            "install_dir": {},
+            "data_dir": { "subdirs": ["data"] },
+            "permissions": {
+                "main": { "url": "/" },
+                "api": {
+                    "url": "re:__DOMAIN__\\/.well-known\\/.*",
+                    "auth_header": false,
+                    "show_tile": false,
+                    "protected": true,
+                    "allowed": ["visitors", "all_users"]
+                }
+            },
+            "apt": {
+                "packages": "mariadb-server, imagemagick, libmagickcore-6.q16-6-extra, acl, tar, smbclient, at, redis-server, php8.3-fpm, php8.3-bz2, php8.3-imap, php8.3-gmp, php8.3-gd, php8.3-intl, php8.3-curl, php8.3-apcu, php8.3-redis, php8.3-ldap, php8.3-imagick, php8.3-zip, php8.3-mbstring, php8.3-xml, php8.3-mysql, php8.3-igbinary, php8.3-bcmath"
+            },
+            "database": { "type": "mysql" }
+        },
+        "doc": {
+            "ADMIN": {
+                "en": "### Manually running Nextcloud commands\n\nYou can run Nextcloud commands from the command line using:\n\n```\nsudo -u nextcloud php8.3 --define apc.enable_cli=1 /var/www/nextcloud/occ ...\n```\n\nAlternatively, you may open a 'Nextcloud shell' with `sudo yunohost app shell nextcloud`, then run `php occ ...`\n\n### ONLYOFFICE integration\n\nONLYOFFICE is an online rich text document editor which can be integrated in Nextcloud\n\n#### With YunoHost App (ARM64 support, better performance)\n\nFor better performance and ARM64 support (Raspberry Pi, OLinuXino...), install the [OnlyOffice YunoHost app](https://apps.yunohost.org/app/onlyoffice) and connect it to Nextcloud, see the tutorial in the [doc of onlyoffice_ynh package](https://github.com/YunoHost-Apps/onlyoffice_ynh/blob/master/README_fr.md#configuration-de-onlyoffice-server)\n\n#### Alternative: With Nextcloud App (no ARM support, lower performance)\n\nNextcloud features a direct integration of ONLYOFFICE through a Nextcloud app.\n- Install *Community Document Server* application in your Nextcloud. That's the part that runs ONLYOFFICE server.\n- Install *ONLYOFFICE* application. That's the client part that will connect to an ONLYOFFICE server.\n- Then in Settings -> ONLYOFFICE (`https://demo.yunohost.org/nextcloud/settings/admin/onlyoffice`), if you want to configure which file formats should be opened by ONLYOFFICE.",
+                "fr": "### Ex\u00e9cuter manuellement des commandes Nextcloud\n\nVous pouvez lancer des commandes Nextcloud depuis la ligne de commande avec:\n\n```\nsudo -u nextcloud php8.3 --define apc.enable_cli=1 /var/www/nextcloud/occ ...\n```\n\nOu bien, vous pouvez ouvrir un \"shell Nextcloud\" avec `sudo yunohost app shell nextcloud`, puis lancer `php occ ...`\n\n### Int\u00e9gration d'ONLYOFFICE\n\nONLYOFFICE est un \u00e9diteur de texte enrichi en ligne qui peut s'int\u00e9grer dans Nextcloud\n\n#### Avec l'application YunoHost (support ARM64, meilleures performances)\n\nPour de meilleures performances et le support de ARM64 (Raspberry Pi, OLinuXino...), installez l'[app YunoHost OnlyOffice](https://apps.yunohost.org/app/onlyoffice), puis connectez-la \u00e0 Nextcloud : voir le tutoriel dans la [doc du paquet onlyoffice_ynh](https://github.com/YunoHost-Apps/onlyoffice_ynh/blob/master/README_fr.md#configuration-de-onlyoffice-server)\n\n#### Alternative: avec l'application Nextcloud (pas de support ARM, performances limit\u00e9es)\n\nNextcloud inclut une int\u00e9gration directe via une application Nextcloud.\n- Installez l'application *Community Document Server* dans votre Nextcloud. C'est la partie qui fait tourner un serveur ONLYOFFICE.\n- Installez l'application *ONLYOFFICE*. C'est la partie cliente qui va se connecter au serveur ONLYOFFICE.\n- Ensuite dans les Param\u00e8tres -> ONLYOFFICE (`https://demo.yunohost.org/nextcloud/settings/admin/onlyoffice`), si vous voulez configurer quels formats de fichier s'ouvrent avec ONLYOFFICE."
+            },
+            "DESCRIPTION": {
+                "en": "Nextcloud lets you access and synchronize data, files, contacts and calendars between different devices (PCs or mobiles), or share them with other people (with or without accounts), and also offers advanced communication and collaborative working features. Nextcloud features its own application mechanism (see also [Nextcloud's app store](https://apps.nextcloud.com/)) for specific functionalities. \n\nIn the context of YunoHost, Nextcloud integrates with the SSO / user portal (YunoHost accounts are automatically connected to Nextcloud).\n\nThe `/.well-known` address will be automatically configured for CalDAV and CardDAV synchronization if no other service such as Ba\u00efkal is already using it.",
+                "fr": "Nextcloud permet de rendre accessible et de synchroniser ses donn\u00e9es, fichiers, contacts, agendas entre diff\u00e9rents appareils (ordinateurs ou mobiles), ou de les partager avec d'autres personnes (avec ou sans comptes), et propose \u00e9galement des fonctionnalit\u00e9s avanc\u00e9es de communication et de travail collaboratif. Nextcloud dispose de son propre m\u00e9canisme d'applications (voir aussi [le store d'apps de Nextcloud](https://apps.nextcloud.com/)) pour disposer des fonctionnalit\u00e9s sp\u00e9cifiques.\n\nDans le cadre de YunoHost, Nextcloud s'int\u00e8gre avec le SSO / portail utilisateur (les comptes YunoHost sont automatiquements connect\u00e9s \u00e0 Nextcloud).\n\nL'adresse  `/.well-known` sera automatiquement configur\u00e9 pour la synchronisation CalDAV et CardDAV si aucun autre service tel que Ba\u00efkal ne l'utilise d\u00e9j\u00e0."
+            }
+        },
+        "notifications": {
+            "PRE_INSTALL": {},
+            "PRE_UPGRADE": {
+                "28.0.3~ynh1": {
+                    "en": "If you are upgrading to a new major version of Nextcloud, please make sure that your Nextcloud apps are up to date from Nextcloud's administration panel beforehand.\n\nAdditionally, if you installed specific Nextcloud apps, we recommend making sure that they are compatible with the new major version. YunoHost will attempt to check this automatically at the very beginning of the upgrade, but a manual check doesn't hurt either. For Nextcloud 28, this forum thread might be helpful : <https://help.nextcloud.com/t/apps-not-compatible-with-nc-28/176234>."
+                },
+                "29.0.0~ynh1": {
+                    "en": "If you are upgrading to a new major version of Nextcloud, please make sure that your Nextcloud apps are up to date from Nextcloud's administration panel beforehand.\n\nAdditionally, if you installed specific Nextcloud apps, we recommend making sure that they are compatible with the new major version.  \nYunoHost will attempt to check this automatically at the very beginning of the upgrade, but a manual check doesn't hurt either.  \nFor Nextcloud 29, this forum thread might be helpful : <https://help.nextcloud.com/t/apps-with-missing-nc29-support/186782>."
+                }
+            },
+            "POST_UPGRADE": {
+                "main": {
+                    "en": "Note that if you've installed any third-party Nextcloud applications, they have probably been disabled. If so, you'll need to manually enable them again.",
+                    "fr": "Notez que si vous avez install\u00e9 des applications Nextcloud tierces, elles sont probablement d\u00e9sactiv\u00e9es et vous devrez les r\u00e9activer manuellement."
+                }
+            }
+        }
+    },
+    "from_catalog": {
+        "added_in_catalog": 1674232499,
+        "antifeatures": [],
+        "category": "synchronization",
+        "featured": false,
+        "git": {
+            "branch": "master",
+            "revision": "79bbe7d11e53dd0dc6d6b63c20eb88ef619abfe9",
+            "url": "https://github.com/YunoHost-Apps/nextcloud_ynh"
+        },
+        "high_quality": false,
+        "id": "nextcloud",
+        "lastUpdate": 1722346788,
+        "level": 6,
+        "logo_hash": "7619f283fa6ce9e0c6ae30cef5bb7cb47b926e9abccda4009a70e54579aa915a",
+        "maintained": true,
+        "manifest": {
+            "description": {
+                "en": "Online storage, file sharing platform and various other applications",
+                "fr": "Stockage en ligne, plateforme de partage de fichiers et diverses autres applications"
+            },
+            "id": "nextcloud",
+            "integration": {
+                "architectures": ["amd64", "arm64", "armhf"],
+                "disk": "650M",
+                "ldap": true,
+                "multi_instance": true,
+                "ram": { "build": "250M", "runtime": "512M" },
+                "sso": true,
+                "yunohost": ">= 11.2"
+            },
+            "maintainers": ["kay0u"],
+            "name": "Nextcloud",
+            "packaging_format": 2,
+            "upstream": {
+                "admindoc": "https://docs.nextcloud.com/server/stable/admin_manual/",
+                "code": "https://github.com/nextcloud/server",
+                "cpe": "cpe:2.3:a:nextcloud:nextcloud",
+                "demo": "https://demo.nextcloud.com/",
+                "license": "AGPL-3.0",
+                "userdoc": "https://docs.nextcloud.com/server/latest/user_manual/en/",
+                "website": "https://nextcloud.com"
+            },
+            "version": "29.0.4~ynh1"
+        },
+        "potential_alternative_to": [
+            "Apple iCloud",
+            "Dropbox",
+            "Google Apps",
+            "Google Docs",
+            "Google Drive",
+            "Mega",
+            "Microsoft OneDrive"
+        ],
+        "state": "working",
+        "subtags": ["calendar", "contacts", "files"],
+        "repository": "default"
+    },
+    "is_webapp": true,
+    "is_default": false,
+    "supports_change_url": true,
+    "supports_backup_restore": true,
+    "supports_multi_instance": true,
+    "supports_config_panel": true,
+    "supports_purge": true,
+    "permissions": {
+        "nextcloud.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Nextcloud",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/nextcloud",
+            "additional_urls": []
+        },
+        "nextcloud.api": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": false,
+            "label": "Nextcloud (api)",
+            "show_tile": false,
+            "protected": true,
+            "url": "re:demo.yunohost.org\\/.well-known\\/.*",
+            "additional_urls": [],
+            "sublabel": "api"
+        }
+    },
+    "label": "Nextcloud"
+}

@@ -1,0 +1,204 @@
+{
+    "operation": [
+        {
+            "name": "20240810-011708-app_upgrade-roundcube",
+            "path": "/var/log/yunohost/categories/operation/20240810-011708-app_upgrade-roundcube.yml",
+            "description": "Mettre \u00e0 jour l'application 'roundcube'",
+            "started_at": "2024-08-10T01:17:08+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240810-011652-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240810-011652-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-08-10T01:16:52+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240810-011554-app_upgrade-nextcloud",
+            "path": "/var/log/yunohost/categories/operation/20240810-011554-app_upgrade-nextcloud.yml",
+            "description": "Mettre \u00e0 jour l'application 'nextcloud'",
+            "started_at": "2024-08-10T01:15:54+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240810-011443-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240810-011443-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-08-10T01:14:43+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240810-011427-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240810-011427-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-08-10T01:14:27+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240804-011513-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240804-011513-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-08-04T01:15:13+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240804-011257-regen_conf-all",
+            "path": "/var/log/yunohost/categories/operation/20240804-011257-regen_conf-all.yml",
+            "description": "R\u00e9g\u00e9n\u00e9rer les configurations du syst\u00e8me 'all'",
+            "started_at": "2024-08-04T01:12:57+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240803-011958-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240803-011958-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-08-03T01:19:58+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240802-011404-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240802-011404-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-08-02T01:14:04+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240802-011155-regen_conf-all",
+            "path": "/var/log/yunohost/categories/operation/20240802-011155-regen_conf-all.yml",
+            "description": "R\u00e9g\u00e9n\u00e9rer les configurations du syst\u00e8me 'all'",
+            "started_at": "2024-08-02T01:11:55+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011727-app_upgrade-nextcloud",
+            "path": "/var/log/yunohost/categories/operation/20240731-011727-app_upgrade-nextcloud.yml",
+            "description": "Mettre \u00e0 jour l'application 'nextcloud'",
+            "started_at": "2024-07-31T01:17:27+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011616-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240731-011616-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-07-31T01:16:16+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011538-app_upgrade-kanboard",
+            "path": "/var/log/yunohost/categories/operation/20240731-011538-app_upgrade-kanboard.yml",
+            "description": "Mettre \u00e0 jour l'application 'kanboard'",
+            "started_at": "2024-07-31T01:15:38+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011527-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240731-011527-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-07-31T01:15:27+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011512-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240731-011512-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-07-31T01:15:12+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240731-011242-regen_conf-all",
+            "path": "/var/log/yunohost/categories/operation/20240731-011242-regen_conf-all.yml",
+            "description": "R\u00e9g\u00e9n\u00e9rer les configurations du syst\u00e8me 'all'",
+            "started_at": "2024-07-31T01:12:42+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240727-011439-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240727-011439-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-07-27T01:14:39+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240727-011232-regen_conf-all",
+            "path": "/var/log/yunohost/categories/operation/20240727-011232-regen_conf-all.yml",
+            "description": "R\u00e9g\u00e9n\u00e9rer les configurations du syst\u00e8me 'all'",
+            "started_at": "2024-07-27T01:12:32+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240726-011351-app_upgrade-ampache",
+            "path": "/var/log/yunohost/categories/operation/20240726-011351-app_upgrade-ampache.yml",
+            "description": "Mettre \u00e0 jour l'application 'ampache'",
+            "started_at": "2024-07-26T01:13:51+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240726-011325-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240726-011325-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-07-26T01:13:25+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240726-011310-tools_upgrade",
+            "path": "/var/log/yunohost/categories/operation/20240726-011310-tools_upgrade.yml",
+            "description": "Mettre \u00e0 jour les paquets du syst\u00e8me",
+            "started_at": "2024-07-26T01:13:10+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240724-011721-app_upgrade-wallabag2",
+            "path": "/var/log/yunohost/categories/operation/20240724-011721-app_upgrade-wallabag2.yml",
+            "description": "Mettre \u00e0 jour l'application 'wallabag2'",
+            "started_at": "2024-07-24T01:17:21+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240724-011651-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240724-011651-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-07-24T01:16:51+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240724-011609-app_upgrade-kanboard",
+            "path": "/var/log/yunohost/categories/operation/20240724-011609-app_upgrade-kanboard.yml",
+            "description": "Mettre \u00e0 jour l'application 'kanboard'",
+            "started_at": "2024-07-24T01:16:09+00:00",
+            "success": true,
+            "parent": null
+        },
+        {
+            "name": "20240724-011556-backup_create",
+            "path": "/var/log/yunohost/categories/operation/20240724-011556-backup_create.yml",
+            "description": "Cr\u00e9er une archive de sauvegarde",
+            "started_at": "2024-07-24T01:15:56+00:00",
+            "success": true,
+            "parent": null
+        }
+    ]
+}

@@ -1,5 +1,4 @@
-import type { UnwrapRef } from 'vue'
-
+import i18n from '@/i18n'
 import type { Obj } from '@/types/commons'
 
 /**
@@ -26,7 +25,7 @@ export function timeout<T extends unknown>(
  *
  * @param value - Anything.
  */
-export function isObjectLiteral(value: any): value is object {
+export function isObjectLiteral(value: any): value is Obj {
   return (
     value !== null &&
     value !== undefined &&
@@ -135,6 +134,15 @@ export function arrayDiff<T extends string>(
   return arr1.filter((item) => !arr2.includes(item))
 }
 
+export function joinOrNull(
+  value: any[] | string | null | undefined,
+): string | null {
+  if (Array.isArray(value) && value.length) {
+    return value.join(i18n.global.t('words.separator'))
+  }
+  return typeof value === 'string' ? value : null
+}
+
 /**
  * Returns a new string with escaped HTML (`&<>"'` replaced by entities).
  *
@@ -182,11 +190,30 @@ export function getFileContent(
   })
 }
 
+export function getKeys<T extends Obj, K extends (keyof T)[]>(obj: T): K {
+  return Object.keys(obj) as K
+}
+
 export function toEntries<T extends Record<PropertyKey, unknown>>(
   obj: T,
 ): { [K in keyof T]: [K, T[K]] }[keyof T][] {
   return Object.entries(obj) as { [K in keyof T]: [K, T[K]] }[keyof T][]
 }
+
+export function fromEntries<
+  const T extends ReadonlyArray<readonly [PropertyKey, unknown]>,
+>(entries: T): { [K in T[number] as K[0]]: K[1] } {
+  return Object.fromEntries(entries) as { [K in T[number] as K[0]]: K[1] }
+}
+
+export function pick<T extends Obj, K extends (keyof T)[]>(
+  obj: T,
+  keys: K,
+): Pick<T, K[number]> {
+  return Object.fromEntries(keys.map((key) => [key, obj[key]])) as Pick<
+    T,
+    K[number]
+  >
 }
 
 export function omit<T extends Obj, K extends (keyof T)[]>(
@@ -198,8 +225,4 @@ export function omit<T extends Obj, K extends (keyof T)[]>(
       .filter((key) => !keys.includes(key))
       .map((key) => [key, obj[key]]),
   ) as Omit<T, K[number]>
-}
-
-export function asUnreffed<T>(value: T): UnwrapRef<T> {
-  return value as UnwrapRef<T>
 }

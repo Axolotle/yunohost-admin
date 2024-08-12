@@ -106,7 +106,7 @@ const subProps = computed<FormFieldProps<C, ArrInnerType<MV>>[]>(() => {
   return (
     props.modelValue?.map((modelValue: ArrInnerType<MV>, i) => {
       return {
-        props: {
+        cProps: {
           ...(props.cProps ?? ({} as ItemComponentToItemProps[C])),
           id: `${props.cProps?.id}.${i}`,
         },
@@ -195,6 +195,7 @@ function updateElement(index: number, newValue: ArrInnerType<MV>) {
       <YIcon iname="plus" /> {{ addBtnText ?? $t('add') }}
     </BButton>
 
+    <!-- FIXME is it needed? or more generic error like "errors in this multiple fields" -->
     <template #invalid-feedback>
       <span v-html="errorMessage" />
     </template>

@@ -1,0 +1,187 @@
+{
+    "packaging_format": 2.0,
+    "id": "bonfire",
+    "name": "Bonfire",
+    "version": "0.9.8-beta.26~ynh2",
+    "maintainers": ["Lapineige"],
+    "description": {
+        "en": "Federated social networking server built on ActivityPub open protocol",
+        "fr": "Serveur de r\u00e9seautage social f\u00e9d\u00e9r\u00e9 bas\u00e9 sur le protocole ouvert ActivityPub"
+    },
+    "upstream": {
+        "license": "AGPL-3.0-only",
+        "website": "https://bonfirenetworks.org/",
+        "demo": "https://playground.bonfire.cafe/",
+        "admindoc": "https://bonfirenetworks.org/docs/",
+        "userdoc": "https://bonfirenetworks.org/docs/",
+        "code": "https://github.com/bonfire-networks/bonfire-app"
+    },
+    "integration": {
+        "yunohost": ">= 11.1.18",
+        "multi_instance": false,
+        "architectures": "all",
+        "ldap": false,
+        "sso": false,
+        "disk": "2000M",
+        "ram": { "build": "1500M", "runtime": "500M" }
+    },
+    "install": [
+        {
+            "type": "domain",
+            "help": {
+                "en": "The domain name to use. Bonfire will be installed at its root path (/). This can't be changed.",
+                "fr": "Nom de domaine \u00e0 utiliser. Bonfire sera install\u00e9 \u00e0 sa racine (/). Cela ne pourra pas \u00eatre chang\u00e9."
+            },
+            "id": "domain",
+            "ask": "Choisissez le domaine sur lequel vous souhaitez installer cette application",
+            "choices": { "demo.yunohost.org": "demo.yunohost.org \u2605" },
+            "default": "demo.yunohost.org"
+        },
+        {
+            "type": "boolean",
+            "default": true,
+            "help": {
+                "en": "Should that instance be visible to the fediverse ? It is required for federation.",
+                "fr": "Cette instance doit elle \u00eatre visible sur le f\u00e9diverse? C'est n\u00e9cessaire pour la f\u00e9d\u00e9ration."
+            },
+            "id": "is_public",
+            "ask": "Cette application devrait-elle \u00eatre visible par les visiteurs anonymes\u202f?"
+        },
+        {
+            "type": "group",
+            "default": "visitors",
+            "id": "init_main_permission",
+            "ask": "Qui doit avoir acc\u00e8s \u00e0 cette application\u202f? (Ceci peut \u00eatre modifi\u00e9 ult\u00e9rieurement)",
+            "choices": {
+                "admins": "Comptes administrateurs",
+                "all_users": "Tous les comptes YunoHost",
+                "visitors": "Visiteurs"
+            }
+        },
+        {
+            "ask": {
+                "en": "Choose the application language",
+                "fr": "Choisissez la langue de l'application"
+            },
+            "type": "select",
+            "choices": ["fr", "en"],
+            "default": "fr",
+            "id": "language"
+        },
+        {
+            "type": "user",
+            "id": "admin",
+            "ask": "Choisissez un compte administrateur pour cette application",
+            "choices": { "demo": "demo (demo@demo.yunohost.org)" },
+            "default": null
+        },
+        {
+            "help": {
+                "en": "Use the help field to add an information for the admin about this question.",
+                "fr": "Utilisez le champ aide pour ajouter une information \u00e0 l'intention de l'administrateur \u00e0 propos de cette question."
+            },
+            "type": "password",
+            "id": "password",
+            "ask": "Choisissez un mot de passe d'administration pour cette application"
+        },
+        {
+            "ask": {
+                "en": "Choose the maximum size of the media uploaded. Can be changed later.",
+                "fr": "Choisissez la taille maximale des m\u00e9dias mis en ligne. Peut-\u00eatre modifi\u00e9 ult\u00e9rieurement."
+            },
+            "type": "select",
+            "choices": [
+                "1MB",
+                "2MB",
+                "5MB",
+                "10MB",
+                "15MB",
+                "20MB",
+                "35MB",
+                "50MB",
+                "70MB",
+                "100MB",
+                "150MB"
+            ],
+            "default": "35MB",
+            "id": "media_upload_size"
+        }
+    ],
+    "resources": {
+        "sources": {
+            "main": {
+                "url": "https://github.com/bonfire-networks/bonfire-app/archive/289ad2d8b57a2ce9a7ce609f000b1ac5d887e7a0.tar.gz",
+                "sha256": "5b79032647f9fd95465692d1de48839359dfa532a72c727f76bf03a1b68e8cdd"
+            }
+        },
+        "ports": {},
+        "system_user": { "allow_email": true },
+        "install_dir": {},
+        "permissions": { "main": { "url": "/" } },
+        "apt": {
+            "packages": "erlang-dev erlang-parsetools erlang-os-mon erlang-tools erlang-xmerl postgresql npm node-postcss",
+            "extras": {
+                "yarn": {
+                    "repo": "deb https://dl.yarnpkg.com/debian/ stable main",
+                    "key": "https://dl.yarnpkg.com/debian/pubkey.gpg",
+                    "packages": ["yarn"]
+                },
+                "elixir13": {
+                    "repo": "deb https://packages.erlang-solutions.com/debian bullseye contrib",
+                    "key": "https://packages.erlang-solutions.com/debian/erlang_solutions.asc",
+                    "packages": ["elixir"]
+                },
+                "just": {
+                    "repo": "deb https://proget.makedeb.org prebuilt-mpr bullseye",
+                    "key": "https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub",
+                    "packages": ["just"]
+                }
+            }
+        },
+        "database": { "type": "postgresql" }
+    },
+    "doc": { "DESCRIPTION": { "en": "" } },
+    "notifications": {
+        "PRE_INSTALL": {},
+        "POST_INSTALL": {},
+        "PRE_UPGRADE": {},
+        "POST_UPGRADE": {}
+    },
+    "remote": {
+        "type": "git",
+        "url": "https://github.com/YunoHost-Apps/bonfire_ynh",
+        "branch": "master",
+        "revision": "e10a7a35d067772916dc8df87b4ea13f14bde1e0"
+    },
+    "lastUpdate": 1719142129,
+    "quality": { "level": 0, "state": "inprogress" },
+    "antifeatures": [],
+    "potential_alternative_to": [
+        "Akkoma",
+        "Calckey",
+        "Iceshrimp",
+        "Mastodon",
+        "Misskey",
+        "Pleroma"
+    ],
+    "screenshot": null,
+    "requirements": {
+        "required_yunohost_version": {
+            "pass": true,
+            "values": { "current": "11.2.27", "required": "11.1.18" }
+        },
+        "arch": {
+            "pass": true,
+            "values": { "current": "amd64", "required": "a, l, l" }
+        },
+        "install": { "pass": true, "values": { "app": "bonfire" } },
+        "disk": {
+            "pass": true,
+            "values": { "current": "30.0G", "required": "2000M" }
+        },
+        "ram": {
+            "pass": true,
+            "values": { "current": "4.9G", "required": "1500M" }
+        }
+    }
+}

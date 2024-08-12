@@ -1,0 +1,106 @@
+{
+    "version": "1.0",
+    "panels": [
+        {
+            "services": [],
+            "actions": { "apply": { "en": "Apply" } },
+            "name": { "en": "Nextcloud configuration" },
+            "sections": [
+                {
+                    "name": { "en": "Maintenance mode" },
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "ask": "Enable maintenance mode",
+                            "type": "boolean",
+                            "default": "0",
+                            "id": "maintenance_mode",
+                            "name": "maintenance_mode",
+                            "optional": true,
+                            "value": 0,
+                            "pattern": null
+                        }
+                    ],
+                    "id": "maintenance_mode"
+                },
+                {
+                    "name": { "en": "Address book configuration" },
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "ask": "Should there be a system address book listing all users, accessible by all users?",
+                            "type": "boolean",
+                            "yes": "yes",
+                            "no": "no",
+                            "id": "system_addressbook_exposed",
+                            "name": "system_addressbook_exposed",
+                            "optional": true,
+                            "value": true,
+                            "default": "no",
+                            "pattern": null
+                        }
+                    ],
+                    "id": "addressbook"
+                },
+                {
+                    "name": { "en": "PHP-FPM configuration" },
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "ask": "Memory footprint",
+                            "type": "select",
+                            "choices": {
+                                "low": "Low, <= 20Mb per pool",
+                                "medium": "Medium, between 20Mb and 40Mb per pool",
+                                "high": "High, > 40Mb per pool",
+                                "specific": "Use specific value"
+                            },
+                            "default": "low",
+                            "id": "fpm_footprint",
+                            "name": "fpm_footprint",
+                            "optional": true,
+                            "value": "high",
+                            "pattern": null
+                        },
+                        {
+                            "visible": "fpm_footprint == 'specific'",
+                            "ask": "Memory footprint of the service?",
+                            "type": "number",
+                            "default": "0",
+                            "help": {
+                                "en": "Free field to specify exactly the footprint in Mb if you don't want to use one of the three previous values."
+                            },
+                            "id": "fpm_free_footprint",
+                            "name": "fpm_free_footprint",
+                            "optional": true,
+                            "value": 0,
+                            "pattern": null
+                        },
+                        {
+                            "ask": "Expected usage",
+                            "type": "select",
+                            "choices": ["low", "medium", "high"],
+                            "default": "low",
+                            "help": {
+                                "en": "low: Personal usage, behind the SSO. No RAM footprint when not used, but the impact on the processor can be high if many users are using the service.<br>medium: Low usage, few people or/and publicly accessible. Low RAM footprint, medium processor footprint when used.<br>high: High usage, frequently visited website. High RAM footprint, but lower on processor usage and quickly responding."
+                            },
+                            "id": "fpm_usage",
+                            "name": "fpm_usage",
+                            "optional": true,
+                            "value": "medium",
+                            "pattern": null
+                        }
+                    ],
+                    "id": "php_fpm_config"
+                }
+            ],
+            "id": "main"
+        }
+    ]
+}

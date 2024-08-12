@@ -10,6 +10,9 @@ import type { Obj } from '@/types/commons'
 import { APIUnauthorizedError, type APIError } from './errors'
 import { getError, getResponseData, openWebSocket } from './handlers'
 
+// FAKE
+import { fetch } from './fake'
+
 export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 export type HumanKey = {
@@ -34,6 +37,7 @@ export type APIErrorData = {
   error_key?: string
   log_ref?: string
   traceback?: string
+  // FIXME name is field id right?
   name?: string
 }
 
@@ -107,7 +111,8 @@ export default {
     asFormData = true,
   }: APIQuery): Promise<T> {
     const cache = cachePath ? useCache<T>(method, cachePath) : undefined
-    if (method === 'GET' && cache?.content) return cache.content
+    console.log('has cache?', method === 'GET' && cache?.content.value !== undefined)
+    if (method === 'GET' && cache?.content.value !== undefined) return cache.content.value
 
     const { locale } = useSettings()
     const { startRequest, endRequest } = useRequests()
@@ -149,6 +154,7 @@ export default {
     cache?.update(responseData)
     endRequest({ request, success: true })
 
+    if (cache) return cache.content.value
     return responseData
   },
 

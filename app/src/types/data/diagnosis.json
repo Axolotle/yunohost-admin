@@ -1,0 +1,643 @@
+{
+    "reports": [
+        {
+            "id": "basesystem",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": { "test": "hardware" },
+                    "status": "INFO",
+                    "data": {
+                        "virt": "lxc",
+                        "arch": "amd64",
+                        "model": "QEMU Standard PC (i440FX + PIIX, 1996)"
+                    },
+                    "summary": "L'architecture du serveur est lxc amd64",
+                    "details": [
+                        "Le mod\u00e8le/architecture du serveur est QEMU Standard PC (i440FX + PIIX, 1996)"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "kernel" },
+                    "data": { "kernel_version": "5.10.0-18-amd64" },
+                    "status": "INFO",
+                    "summary": "Le serveur utilise le noyau Linux 5.10.0-18-amd64",
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "host" },
+                    "data": { "debian_version": "11.10" },
+                    "status": "INFO",
+                    "summary": "Le serveur utilise Debian 11.10",
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "ynh_versions" },
+                    "data": { "main_version": "11.2.27", "repo": "stable" },
+                    "status": "INFO",
+                    "summary": "Le serveur utilise YunoHost 11.2.27 (stable)",
+                    "details": [
+                        "yunohost version\u202f: 11.2.27 (stable)",
+                        "yunohost-admin version\u202f: 11.2.7 (stable)",
+                        "moulinette version\u202f: 11.2.1 (stable)",
+                        "ssowat version\u202f: 11.2.1.1 (stable)"
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953722,
+            "description": "Syst\u00e8me de base"
+        },
+        {
+            "id": "ip",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": { "test": "dnsresolv" },
+                    "status": "SUCCESS",
+                    "summary": "La r\u00e9solution de nom de domaine fonctionne\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "ipv4" },
+                    "data": { "global": "80.67.163.157", "local": "10.1.5.4" },
+                    "status": "SUCCESS",
+                    "summary": "Le serveur est connect\u00e9 \u00e0 Internet en IPv4\u202f!",
+                    "details": [
+                        "IP globale\u202f: <code>80.67.163.157</code>",
+                        "IP locale\u202f: <code>10.1.5.4</code>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "ipv6" },
+                    "data": {
+                        "global": null,
+                        "local": "fe80::216:3eff:feb4:d448"
+                    },
+                    "status": "WARNING",
+                    "summary": "Le serveur ne dispose pas d'une adresse IPv6.",
+                    "details": [
+                        "IPv6 devrait g\u00e9n\u00e9ralement \u00eatre configur\u00e9 automatiquement par le syst\u00e8me ou par votre fournisseur d'acc\u00e8s \u00e0 internet (FAI) s'il est disponible. Sinon, vous devrez peut-\u00eatre configurer quelques \u00e9l\u00e9ments manuellement, comme expliqu\u00e9 dans la documentation ici\u202f: <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/ipv6'>https://yunohost.org/ipv6</a>."
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953722,
+            "description": "Connectivit\u00e9 Internet"
+        },
+        {
+            "id": "dnsrecords",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": {
+                        "domain": "demo.yunohost.org",
+                        "category": "basic"
+                    },
+                    "data": { "A:demo": "OK", "AAAA:demo": "WRONG" },
+                    "status": "ERROR",
+                    "summary": "Certains enregistrements DNS sont manquants ou incorrects pour le domaine demo.yunohost.org (cat\u00e9gorie basic)",
+                    "details": [
+                        "Veuillez consulter la documentation disponible ici <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/dns_config'>https://yunohost.org/dns_config</a> si vous avez besoin d'aide pour configurer les enregistrements DNS.",
+                        "Cet enregistrement DNS ne semble pas correspondre \u00e0 la configuration recommand\u00e9e\u202f: <br>Type\u202f: <code>AAAA</code><br>Nom\u202f: <code>demo</code><br> La valeur actuelle est\u202f: <code>2001:910:0:40::157</code><br> La valeur attendue est\u202f: <code>None</code>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": {
+                        "domain": "demo.yunohost.org",
+                        "category": "mail"
+                    },
+                    "data": {
+                        "MX:demo": "MISSING",
+                        "TXT:demo": "MISSING",
+                        "TXT:mail._domainkey.demo": "MISSING",
+                        "TXT:_dmarc.demo": "MISSING"
+                    },
+                    "status": "ERROR",
+                    "summary": "Certains enregistrements DNS sont manquants ou incorrects pour le domaine demo.yunohost.org (cat\u00e9gorie mail)",
+                    "details": [
+                        "Veuillez consulter la documentation disponible ici <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/dns_config'>https://yunohost.org/dns_config</a> si vous avez besoin d'aide pour configurer les enregistrements DNS.",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>MX</code><br>Nom\u202f: <code>demo</code><br>Valeur\u202f: <code>10 demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>TXT</code><br>Nom\u202f: <code>demo</code><br>Valeur\u202f: <code>\"v=spf1 a mx -all\"</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>TXT</code><br>Nom\u202f: <code>mail._domainkey.demo</code><br>Valeur\u202f: <code>\"v=DKIM1; h=sha256; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQConlQ82VwaMEcwvlDNu/ljguEENvoeMYV9ElGsIr2Klq4Z8apM5yOf5VxjK0tvjg5Qi4H/6BOlxZHHLJ+Z9Ulmla7wPa7Pwtlkr5Hm/L0subMRbV59VKD3jaeeSLJVdhVw86OS58Ow47OpquiFcqbM5ScyM3QApiS70/337cfPHQIDAQAB\"</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>TXT</code><br>Nom\u202f: <code>_dmarc.demo</code><br>Valeur\u202f: <code>\"v=DMARC1; p=none\"</code>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": {
+                        "domain": "demo.yunohost.org",
+                        "category": "xmpp"
+                    },
+                    "data": {
+                        "SRV:_xmpp-client._tcp.demo": "MISSING",
+                        "SRV:_xmpp-server._tcp.demo": "MISSING",
+                        "CNAME:muc.demo": "MISSING",
+                        "CNAME:pubsub.demo": "MISSING",
+                        "CNAME:vjud.demo": "MISSING",
+                        "CNAME:xmpp-upload.demo": "MISSING"
+                    },
+                    "status": "WARNING",
+                    "summary": "Certains enregistrements DNS sont manquants ou incorrects pour le domaine demo.yunohost.org (cat\u00e9gorie xmpp)",
+                    "details": [
+                        "Veuillez consulter la documentation disponible ici <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/dns_config'>https://yunohost.org/dns_config</a> si vous avez besoin d'aide pour configurer les enregistrements DNS.",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>SRV</code><br>Nom\u202f: <code>_xmpp-client._tcp.demo</code><br>Valeur\u202f: <code>0 5 5222 demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>SRV</code><br>Nom\u202f: <code>_xmpp-server._tcp.demo</code><br>Valeur\u202f: <code>0 5 5269 demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>CNAME</code><br>Nom\u202f: <code>muc.demo</code><br>Valeur\u202f: <code>demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>CNAME</code><br>Nom\u202f: <code>pubsub.demo</code><br>Valeur\u202f: <code>demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>CNAME</code><br>Nom\u202f: <code>vjud.demo</code><br>Valeur\u202f: <code>demo.yunohost.org.</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>CNAME</code><br>Nom\u202f: <code>xmpp-upload.demo</code><br>Valeur\u202f: <code>demo.yunohost.org.</code>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": {
+                        "domain": "demo.yunohost.org",
+                        "category": "extra"
+                    },
+                    "data": {
+                        "A:*.demo": "MISSING",
+                        "AAAA:*.demo": "OK",
+                        "CAA:demo": "MISSING"
+                    },
+                    "status": "WARNING",
+                    "summary": "Certains enregistrements DNS sont manquants ou incorrects pour le domaine demo.yunohost.org (cat\u00e9gorie extra)",
+                    "details": [
+                        "Veuillez consulter la documentation disponible ici <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/dns_config'>https://yunohost.org/dns_config</a> si vous avez besoin d'aide pour configurer les enregistrements DNS.",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>A</code><br>Nom\u202f: <code>*.demo</code><br>Valeur\u202f: <code>80.67.163.157</code>",
+                        "Selon la configuration DNS recommand\u00e9e, vous devez ajouter un enregistrement DNS<br>Type\u202f: <code>CAA</code><br>Nom\u202f: <code>demo</code><br>Valeur\u202f: <code>0 issue \"letsencrypt.org\"</code>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": {
+                        "test": "domain_expiration",
+                        "domain": "yunohost.org"
+                    },
+                    "data": {},
+                    "status": "SUCCESS",
+                    "summary": "Vos domaines sont enregistr\u00e9s et ne vont pas expirer prochainement.",
+                    "details": ["yunohost.org expire dans 202 jours."],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953730,
+            "description": "Enregistrements DNS"
+        },
+        {
+            "id": "ports",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": { "port": "22" },
+                    "data": { "service": "ssh", "category": "admin" },
+                    "status": "ERROR",
+                    "summary": "Le port 22 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type admin (service ssh)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "25" },
+                    "data": { "service": "postfix", "category": "email" },
+                    "status": "ERROR",
+                    "summary": "Le port 25 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type email (service postfix)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "80" },
+                    "data": { "service": "nginx", "category": "web" },
+                    "status": "SUCCESS",
+                    "summary": "Le port 80 est accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type web (service nginx)"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "443" },
+                    "data": { "service": "nginx", "category": "web" },
+                    "status": "SUCCESS",
+                    "summary": "Le port 443 est accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type web (service nginx)"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "587" },
+                    "data": { "service": "postfix", "category": "email" },
+                    "status": "ERROR",
+                    "summary": "Le port 587 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type email (service postfix)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "993" },
+                    "data": { "service": "dovecot", "category": "email" },
+                    "status": "ERROR",
+                    "summary": "Le port 993 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type email (service dovecot)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "5222" },
+                    "data": { "service": "metronome", "category": "xmpp" },
+                    "status": "ERROR",
+                    "summary": "Le port 5222 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type xmpp (service metronome)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "5269" },
+                    "data": { "service": "metronome", "category": "xmpp" },
+                    "status": "ERROR",
+                    "summary": "Le port 5269 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type xmpp (service metronome)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "port": "51413" },
+                    "data": {
+                        "service": "transmission-daemon",
+                        "category": "[?]"
+                    },
+                    "status": "ERROR",
+                    "summary": "Le port 51413 n'est pas accessible depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Rendre ce port accessible est n\u00e9cessaire pour les fonctionnalit\u00e9s de type [?] (service transmission-daemon)",
+                        "Pour r\u00e9soudre ce probl\u00e8me, vous devez probablement configurer la redirection de port sur votre routeur Internet comme d\u00e9crit dans <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>https://yunohost.org/isp_box_config</a>"
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953744,
+            "description": "Exposition des ports"
+        },
+        {
+            "id": "web",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": { "domain": "demo.yunohost.org" },
+                    "status": "ERROR",
+                    "summary": "Le domaine demo.yunohost.org est inaccessible en HTTP depuis l'ext\u00e9rieur.",
+                    "details": [
+                        "Le syst\u00e8me de diagnostique n'a pas r\u00e9ussi \u00e0 contacter votre serveur. Il se peut qu'une autre machine r\u00e9ponde \u00e0 la place de votre serveur. V\u00e9rifiez que le port 80 est correctement redirig\u00e9, que votre configuration Nginx est \u00e0 jour et qu'un reverse-proxy n'interf\u00e8re pas."
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953744,
+            "description": "Web"
+        },
+        {
+            "id": "mail",
+            "cached_for": 600,
+            "items": [
+                {
+                    "meta": { "test": "mail_outgoing_port_25" },
+                    "status": "SUCCESS",
+                    "summary": "Le serveur de messagerie SMTP peut envoyer des emails (le port sortant 25 n'est pas bloqu\u00e9).",
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "mail_ehlo", "ipversion": 4 },
+                    "data": {},
+                    "status": "ERROR",
+                    "summary": "Le serveur de messagerie SMTP est inaccessible de l'ext\u00e9rieur en IPv4. Il ne pourra pas recevoir des emails.",
+                    "details": [
+                        "Impossible d'ouvrir une connexion sur le port 25 \u00e0 votre serveur en IPv4. Il semble inaccessible. <br> 1. La cause la plus courante de ce probl\u00e8me est que le port 25 <a target='_blank' rel='noopener noreferrer' href='https://yunohost.org/isp_box_config'>n'est pas correctement redirig\u00e9 vers votre serveur</a>. <br> 2. Vous devez \u00e9galement vous assurer que le service postfix est en cours d'ex\u00e9cution. <br> 3. Sur les configurations plus complexes\u202f: assurez-vous qu'aucun pare-feu ou proxy invers\u00e9 n'interf\u00e8re."
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "mail_fcrdns" },
+                    "status": "SUCCESS",
+                    "summary": "Votre DNS inverse est correctement configur\u00e9\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": {
+                        "test": "mail_blacklist",
+                        "item": "80.67.163.157",
+                        "blacklist": "b.barracudacentral.org"
+                    },
+                    "data": {
+                        "blacklist_name": "Barracuda Reputation Block List",
+                        "blacklist_website": "https://barracudacentral.org/rbl/",
+                        "reason": "\"http://www.barracudanetworks.com/reputation/?pr=1&ip=80.67.163.157\""
+                    },
+                    "status": "ERROR",
+                    "summary": "Votre IP ou domaine <code>80.67.163.157</code> est sur liste noire sur Barracuda Reputation Block List",
+                    "details": [
+                        "La raison de la liste noire est\u202f: \"http://www.barracudanetworks.com/reputation/?pr=1&ip=80.67.163.157\"",
+                        "Apr\u00e8s avoir identifi\u00e9 la raison pour laquelle vous \u00eates r\u00e9pertori\u00e9 sur cette liste et l'avoir corrig\u00e9e, n'h\u00e9sitez pas \u00e0 demander le retrait de votre IP ou de votre domaine sur https://barracudacentral.org/rbl/"
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "mail_queue" },
+                    "data": { "nb_pending": 0 },
+                    "status": "SUCCESS",
+                    "summary": "0 emails en attente dans les files d'attente de messagerie",
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953757,
+            "description": "Email"
+        },
+        {
+            "id": "services",
+            "cached_for": 300,
+            "items": [
+                {
+                    "meta": { "service": "dnsmasq" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service dnsmasq est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "dovecot" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service dovecot est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "etherpad_mypads" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service etherpad_mypads est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "fail2ban" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service fail2ban est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "metronome" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service metronome est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "mysql" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service mysql est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "nginx" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service nginx est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "php7.4-fpm" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service php7.4-fpm est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "php8.0-fpm" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service php8.0-fpm est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "php8.1-fpm" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service php8.1-fpm est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "php8.2-fpm" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service php8.2-fpm est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "php8.3-fpm" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service php8.3-fpm est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "postfix" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service postfix est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "postgresql" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service postgresql est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "redis-server" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service redis-server est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "rspamd" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service rspamd est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "shellinabox" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service shellinabox est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "slapd" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service slapd est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "ssh" },
+                    "data": { "status": "running", "configuration": "valid" },
+                    "status": "SUCCESS",
+                    "summary": "Le service ssh est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "transmission-daemon" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service transmission-daemon est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "ttrss" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service ttrss est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "uwsgi-app@searx" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service uwsgi-app@searx est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "yunohost-api" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service yunohost-api est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "yunohost-firewall" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service yunohost-firewall est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                },
+                {
+                    "meta": { "service": "yunomdns" },
+                    "data": { "status": "running", "configuration": "unknown" },
+                    "status": "SUCCESS",
+                    "summary": "Le service yunomdns est en cours de fonctionnement\u202f!",
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953760,
+            "description": "\u00c9tat des services"
+        },
+        {
+            "id": "systemresources",
+            "cached_for": 300,
+            "items": [
+                {
+                    "meta": { "test": "ram" },
+                    "data": {
+                        "total": "5.8 GiB",
+                        "available": "5.0 GiB",
+                        "available_percent": 87
+                    },
+                    "status": "SUCCESS",
+                    "summary": "Le syst\u00e8me dispose encore de 5.0 GiB (87%) de RAM sur 5.8 GiB.",
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "swap" },
+                    "data": { "total": "0 B", "recommended": "512 MiB" },
+                    "status": "INFO",
+                    "summary": "Le syst\u00e8me n'a aucun espace de swap. Vous devriez envisager d'ajouter au moins 512 MiB de swap pour \u00e9viter les situations o\u00f9 le syst\u00e8me manque de m\u00e9moire.",
+                    "details": [
+                        "Soyez averti et conscient que si vous h\u00e9bergez une partition SWAP sur une carte SD ou un disque SSD, cela risque de r\u00e9duire consid\u00e9rablement l'esp\u00e9rance de vie de celui-ci."
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "diskusage", "mountpoint": "/" },
+                    "data": {
+                        "device": "/dev/sda",
+                        "total": "74 GiB",
+                        "free": "30 GiB",
+                        "free_percent": 40
+                    },
+                    "status": "SUCCESS",
+                    "summary": "L'espace de stockage <code>/</code> (sur le p\u00e9riph\u00e9rique <code>/dev/sda</code>) a encore 30 GiB (40%) d'espace restant (sur 74 GiB)\u202f!",
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953760,
+            "description": "Ressources syst\u00e8me"
+        },
+        {
+            "id": "regenconf",
+            "cached_for": 300,
+            "items": [
+                {
+                    "meta": {
+                        "test": "regenconf",
+                        "category": "ssh",
+                        "file": "/etc/ssh/sshd_config"
+                    },
+                    "status": "WARNING",
+                    "summary": "Le fichier de configuration <code>/etc/ssh/sshd_config</code> semble avoir \u00e9t\u00e9 modifi\u00e9 manuellement.",
+                    "details": [
+                        "C'est probablement OK si vous savez ce que vous faites\u202f! YunoHost cessera de mettre \u00e0 jour ce fichier automatiquement\u2026 Mais attention, les mises \u00e0 jour de YunoHost pourraient contenir d'importantes modifications recommand\u00e9es. Si vous le souhaitez, vous pouvez inspecter les diff\u00e9rences avec <code class='cmd'>yunohost tools regen-conf ssh --dry-run --with-diff</code> et forcer la r\u00e9initialisation \u00e0 la configuration recommand\u00e9e avec <code class='cmd'>yunohost tools regen-conf ssh --force</code>"
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953760,
+            "description": "Configurations syst\u00e8me"
+        },
+        {
+            "id": "apps",
+            "cached_for": 300,
+            "items": [
+                {
+                    "meta": { "test": "apps", "app": "Piwigo" },
+                    "status": "WARNING",
+                    "summary": "Un probl\u00e8me a \u00e9t\u00e9 d\u00e9tect\u00e9 pour l'application Piwigo",
+                    "details": [
+                        "Cette application ne figure pas dans le catalogue de YunoHost. Si elle l'\u00e9tait dans le pass\u00e9 et a \u00e9t\u00e9 supprim\u00e9e, vous devriez envisager de d\u00e9sinstaller cette application car elle ne recevra pas de mises \u00e0 jour et peut compromettre l'int\u00e9grit\u00e9 et la s\u00e9curit\u00e9 de votre syst\u00e8me."
+                    ],
+                    "ignored": false
+                },
+                {
+                    "meta": { "test": "apps", "app": "Rainloop" },
+                    "status": "WARNING",
+                    "summary": "Un probl\u00e8me a \u00e9t\u00e9 d\u00e9tect\u00e9 pour l'application Rainloop",
+                    "details": [
+                        "Cette application ne figure pas dans le catalogue de YunoHost. Si elle l'\u00e9tait dans le pass\u00e9 et a \u00e9t\u00e9 supprim\u00e9e, vous devriez envisager de d\u00e9sinstaller cette application car elle ne recevra pas de mises \u00e0 jour et peut compromettre l'int\u00e9grit\u00e9 et la s\u00e9curit\u00e9 de votre syst\u00e8me."
+                    ],
+                    "ignored": false
+                }
+            ],
+            "timestamp": 1722953763,
+            "description": "Applications"
+        }
+    ]
+}

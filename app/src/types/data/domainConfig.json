@@ -1,0 +1,289 @@
+{
+    "version": "1.0",
+    "i18n": "domain_config",
+    "panels": [
+        {
+            "services": [],
+            "actions": { "apply": { "en": "Apply" } },
+            "name": { "en": "Features" },
+            "sections": [
+                {
+                    "name": "",
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "type": "app",
+                            "filter": "is_webapp",
+                            "default": "_none",
+                            "id": "default_app",
+                            "name": "default_app",
+                            "optional": true,
+                            "current_value": "_none",
+                            "ask": "Application par d\u00e9faut",
+                            "choices": {
+                                "_none": "---",
+                                "agendav": "AgenDAV (demo.yunohost.org/agendav)",
+                                "ampache": "Ampache (demo.yunohost.org/ampache)",
+                                "baikal": "Ba\u00efkal (demo.yunohost.org/baikal)",
+                                "dokuwiki": "Dokuwiki (demo.yunohost.org/dokuwiki)",
+                                "etherpad_mypads": "Etherpad MyPads (demo.yunohost.org/etherpad)",
+                                "hextris": "Hextris (demo.yunohost.org/hextris)",
+                                "jirafeau": "Jirafeau (demo.yunohost.org/jirafeau)",
+                                "kanboard": "Kanboard (demo.yunohost.org/kanboard)",
+                                "nextcloud": "Nextcloud (demo.yunohost.org/nextcloud)",
+                                "opensondage": "OpenSondage (demo.yunohost.org/date)",
+                                "phpmyadmin": "phpMyAdmin (demo.yunohost.org/phpmyadmin)",
+                                "piwigo": "Piwigo (demo.yunohost.org/piwigo)",
+                                "rainloop": "Rainloop (demo.yunohost.org/rainloop)",
+                                "roundcube": "Roundcube (demo.yunohost.org/webmail)",
+                                "searx": "Searx (demo.yunohost.org/searx)",
+                                "strut": "Strut (demo.yunohost.org/strut)",
+                                "transmission": "Transmission (demo.yunohost.org/torrent)",
+                                "ttrss": "Tiny Tiny RSS (demo.yunohost.org/ttrss)",
+                                "wallabag2": "Wallabag (demo.yunohost.org/wallabag)",
+                                "wordpress": "WordPress (demo.yunohost.org/blog)",
+                                "zerobin": "Zerobin (demo.yunohost.org/zerobin)"
+                            },
+                            "pattern": null,
+                            "help": "Les personnes seront automatiquement redirig\u00e9es vers cette application lorsqu'elles ouvriront ce domaine. Si aucune application n'est sp\u00e9cifi\u00e9e, les personnes sont redirig\u00e9es vers le formulaire de connexion au portail YunoHost."
+                        }
+                    ],
+                    "id": "app"
+                },
+                {
+                    "name": "",
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "type": "boolean",
+                            "default": 1,
+                            "id": "mail_out",
+                            "name": "mail_out",
+                            "optional": true,
+                            "current_value": 1,
+                            "ask": "Emails sortants",
+                            "pattern": null
+                        },
+                        {
+                            "type": "boolean",
+                            "default": 1,
+                            "id": "mail_in",
+                            "name": "mail_in",
+                            "optional": true,
+                            "current_value": 1,
+                            "ask": "Emails entrants",
+                            "pattern": null
+                        }
+                    ],
+                    "id": "mail"
+                },
+                {
+                    "name": "",
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "type": "boolean",
+                            "default": 1,
+                            "id": "xmpp",
+                            "name": "xmpp",
+                            "optional": true,
+                            "current_value": 1,
+                            "ask": "Messagerie instantan\u00e9e (XMPP)",
+                            "pattern": null,
+                            "help": "NB\u202f: certaines fonctions XMPP n\u00e9cessiteront la mise \u00e0 jour de vos enregistrements DNS et la r\u00e9g\u00e9n\u00e9ration de votre certificat Lets Encrypt pour \u00eatre activ\u00e9es"
+                        }
+                    ],
+                    "id": "xmpp"
+                }
+            ],
+            "id": "feature"
+        },
+        {
+            "services": [],
+            "actions": { "apply": { "en": "Apply" } },
+            "name": { "en": "DNS" },
+            "sections": [
+                {
+                    "name": {
+                        "en": "Infos du Registrar (fournisseur du nom de domaine)"
+                    },
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": false,
+                    "options": [
+                        {
+                            "type": "alert",
+                            "style": "info",
+                            "ask": "YunoHost a d\u00e9tect\u00e9 automatiquement que ce domaine est g\u00e9r\u00e9 par le registrar **ovh**. Si vous le souhaitez, YunoHost configurera automatiquement cette zone DNS, si vous lui fournissez les identifiants API appropri\u00e9s. Vous pouvez trouver de la documentation sur la fa\u00e7on d'obtenir vos identifiants API sur cette page\u202f: https://yunohost.org/registar_api_ovh. (Vous pouvez \u00e9galement configurer manuellement vos enregistrements DNS en suivant la documentation sur https://yunohost.org/dns )",
+                            "id": "registrar",
+                            "name": "registrar",
+                            "optional": true,
+                            "current_value": "ovh"
+                        },
+                        {
+                            "type": "select",
+                            "choices": [
+                                "ovh-eu",
+                                "ovh-ca",
+                                "soyoustart-eu",
+                                "soyoustart-ca",
+                                "kimsufi-eu",
+                                "kimsufi-ca"
+                            ],
+                            "default": "ovh-eu",
+                            "optional": "False",
+                            "id": "auth_entrypoint",
+                            "name": "auth_entrypoint",
+                            "current_value": "ovh-eu",
+                            "ask": "Point d'entr\u00e9e API",
+                            "pattern": null
+                        },
+                        {
+                            "type": "string",
+                            "redact": true,
+                            "default": null,
+                            "optional": "False",
+                            "id": "auth_application_key",
+                            "name": "auth_application_key",
+                            "current_value": "",
+                            "ask": "Cl\u00e9 d'application",
+                            "pattern": null
+                        },
+                        {
+                            "type": "string",
+                            "redact": true,
+                            "default": null,
+                            "optional": "False",
+                            "id": "auth_application_secret",
+                            "name": "auth_application_secret",
+                            "current_value": "",
+                            "ask": "Cl\u00e9 secr\u00e8te de l'application",
+                            "pattern": null
+                        },
+                        {
+                            "type": "string",
+                            "redact": true,
+                            "default": null,
+                            "optional": "False",
+                            "id": "auth_consumer_key",
+                            "name": "auth_consumer_key",
+                            "current_value": "",
+                            "ask": "Cl\u00e9 d'identification",
+                            "pattern": null
+                        }
+                    ],
+                    "id": "registrar"
+                }
+            ],
+            "id": "dns"
+        },
+        {
+            "services": [],
+            "actions": { "apply": { "en": "Apply" } },
+            "name": { "en": "Certificate" },
+            "sections": [
+                {
+                    "name": "",
+                    "services": [],
+                    "optional": true,
+                    "is_action_section": true,
+                    "options": [
+                        {
+                            "type": "alert",
+                            "style": "warning",
+                            "ask": "AVERTISSEMENT\u202f: Le certificat actuel est auto-sign\u00e9. Les navigateurs afficheront un avertissement alarmiste aux nouveaux visiteurs\u202f!",
+                            "id": "cert_summary",
+                            "name": "cert_summary",
+                            "optional": true
+                        },
+                        {
+                            "type": "number",
+                            "readonly": true,
+                            "visible": "false",
+                            "id": "cert_validity",
+                            "name": "cert_validity",
+                            "optional": true,
+                            "current_value": 3538,
+                            "ask": "Validit\u00e9",
+                            "default": null,
+                            "pattern": null
+                        },
+                        {
+                            "type": "string",
+                            "visible": false,
+                            "id": "cert_issuer",
+                            "name": "cert_issuer",
+                            "optional": true,
+                            "current_value": "selfsigned",
+                            "ask": "Autorit\u00e9 de certification",
+                            "default": null,
+                            "pattern": null
+                        },
+                        {
+                            "type": "boolean",
+                            "visible": false,
+                            "id": "acme_eligible",
+                            "name": "acme_eligible",
+                            "optional": true,
+                            "current_value": false,
+                            "ask": "\u00c9ligibilit\u00e9 au protocole ACME (Automatic Certificate Management Environment, litt\u00e9ralement\u202f: environnement de gestion automatique de certificat)",
+                            "default": 0,
+                            "pattern": null
+                        },
+                        {
+                            "type": "alert",
+                            "style": "warning",
+                            "visible": "acme_eligible == false || acme_eligible == null",
+                            "id": "acme_eligible_explain",
+                            "name": "acme_eligible_explain",
+                            "optional": true,
+                            "ask": "Ce domaine ne semble pas pr\u00eat pour installer un certificat Let's Encrypt. Veuillez v\u00e9rifier votre configuration DNS mais aussi que votre serveur est bien joignable en HTTP. Les sections 'Enregistrements DNS' et 'Web' de <a href='#/diagnosis'>la page Diagnostic</a> peuvent vous aider \u00e0 comprendre ce qui est mal configur\u00e9."
+                        },
+                        {
+                            "type": "boolean",
+                            "default": false,
+                            "visible": "acme_eligible == false || acme_eligible == null",
+                            "id": "cert_no_checks",
+                            "name": "cert_no_checks",
+                            "optional": true,
+                            "current_value": false,
+                            "ask": "Ignorer les tests et autres v\u00e9rifications du diagnostic",
+                            "pattern": null
+                        },
+                        {
+                            "type": "button",
+                            "icon": "star",
+                            "style": "success",
+                            "visible": "cert_issuer != 'letsencrypt'",
+                            "enabled": "acme_eligible || cert_no_checks",
+                            "id": "cert_install",
+                            "name": "cert_install",
+                            "optional": true,
+                            "ask": "Installer un certificat Let's Encrypt"
+                        },
+                        {
+                            "type": "button",
+                            "icon": "refresh",
+                            "style": "warning",
+                            "visible": "cert_issuer == 'letsencrypt'",
+                            "enabled": "acme_eligible || cert_no_checks",
+                            "id": "cert_renew",
+                            "name": "cert_renew",
+                            "optional": true,
+                            "ask": "Renouvellement du certificat Let's Encrypt",
+                            "help": "Le certificat sera automatiquement renouvel\u00e9 dans les 15 derniers jours pr\u00e9c\u00e9dant sa fin de validit\u00e9. Vous pouvez le renouveler manuellement si vous le souhaitez (non recommand\u00e9)."
+                        }
+                    ],
+                    "id": "cert"
+                }
+            ],
+            "id": "cert"
+        }
+    ]
+}

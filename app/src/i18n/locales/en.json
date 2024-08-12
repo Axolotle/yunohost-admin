@@ -329,6 +329,9 @@
         "help": "Need help?"
     },
     "footer_version": "Powered by <a href='https://yunohost.org'>YunoHost</a> {version} ({repo}).",
+    "form": {
+        "select_one": "Please select an option"
+    },
     "form_errors": {
         "alpha": "Value must be alphabetical characters only.",
         "alphalownumdot_": "Value must be lower-case alphanumeric, dots and underscore characters only.",

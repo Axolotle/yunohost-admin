@@ -1,0 +1,384 @@
+{
+    "permissions": {
+        "mail.main": {
+            "allowed": ["all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": false,
+            "label": "E-mail",
+            "show_tile": false,
+            "protected": true,
+            "url": null,
+            "additional_urls": []
+        },
+        "xmpp.main": {
+            "allowed": ["all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": false,
+            "label": "XMPP",
+            "show_tile": false,
+            "protected": true,
+            "url": null,
+            "additional_urls": []
+        },
+        "ssh.main": {
+            "allowed": [],
+            "corresponding_users": [],
+            "auth_header": false,
+            "label": "SSH",
+            "show_tile": false,
+            "protected": true,
+            "url": null,
+            "additional_urls": []
+        },
+        "sftp.main": {
+            "allowed": [],
+            "corresponding_users": [],
+            "auth_header": false,
+            "label": "SFTP",
+            "show_tile": false,
+            "protected": true,
+            "url": null,
+            "additional_urls": []
+        },
+        "ampache.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Ampache",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/ampache",
+            "additional_urls": []
+        },
+        "baikal.main": {
+            "allowed": ["visitors"],
+            "corresponding_users": [],
+            "auth_header": false,
+            "label": "Ba\u00efkal",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/baikal",
+            "additional_urls": []
+        },
+        "baikal.admin": {
+            "allowed": ["admins"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Ba\u00efkal (admin)",
+            "show_tile": false,
+            "protected": false,
+            "url": "demo.yunohost.org/baikal/admin",
+            "additional_urls": [],
+            "sublabel": "admin"
+        },
+        "agendav.main": {
+            "allowed": ["all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "AgenDAV",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/agendav",
+            "additional_urls": []
+        },
+        "dokuwiki.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Dokuwiki",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/dokuwiki",
+            "additional_urls": []
+        },
+        "dokuwiki.admin": {
+            "allowed": ["admins"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Dokuwiki (admin)",
+            "show_tile": false,
+            "protected": false,
+            "url": "demo.yunohost.org/dokuwiki/admin",
+            "additional_urls": [],
+            "sublabel": "admin"
+        },
+        "etherpad_mypads.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Etherpad MyPads",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/etherpad",
+            "additional_urls": []
+        },
+        "etherpad_mypads.api": {
+            "allowed": [],
+            "corresponding_users": [],
+            "auth_header": true,
+            "label": "Etherpad MyPads (api)",
+            "show_tile": false,
+            "protected": false,
+            "url": null,
+            "additional_urls": [],
+            "sublabel": "api"
+        },
+        "etherpad_mypads.admin": {
+            "allowed": ["admins"],
+            "corresponding_users": ["demo"],
+            "auth_header": false,
+            "label": "Etherpad MyPads (admin)",
+            "show_tile": false,
+            "protected": false,
+            "url": "demo.yunohost.org/etherpad/admin",
+            "additional_urls": [],
+            "sublabel": "admin"
+        },
+        "hextris.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Hextris",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/hextris",
+            "additional_urls": []
+        },
+        "jirafeau.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Jirafeau",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/jirafeau",
+            "additional_urls": []
+        },
+        "kanboard.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Kanboard",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/kanboard",
+            "additional_urls": []
+        },
+        "kanboard.ics": {
+            "allowed": ["visitors"],
+            "corresponding_users": [],
+            "auth_header": true,
+            "label": "Kanboard (ics)",
+            "show_tile": false,
+            "protected": false,
+            "url": "demo.yunohost.org/kanboard/?controller=ICalendarController",
+            "additional_urls": [],
+            "sublabel": "ics"
+        },
+        "nextcloud.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Nextcloud",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/nextcloud",
+            "additional_urls": []
+        },
+        "nextcloud.api": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": false,
+            "label": "Nextcloud (api)",
+            "show_tile": false,
+            "protected": true,
+            "url": "re:demo.yunohost.org\\/.well-known\\/.*",
+            "additional_urls": [],
+            "sublabel": "api"
+        },
+        "opensondage.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "OpenSondage",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/date",
+            "additional_urls": []
+        },
+        "phpmyadmin.main": {
+            "allowed": ["admins"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "phpMyAdmin",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/phpmyadmin",
+            "additional_urls": []
+        },
+        "piwigo.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Piwigo",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/piwigo",
+            "additional_urls": []
+        },
+        "rainloop.main": {
+            "allowed": ["all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Rainloop",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/rainloop",
+            "additional_urls": []
+        },
+        "roundcube.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Roundcube",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/webmail",
+            "additional_urls": []
+        },
+        "searx.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Searx",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/searx",
+            "additional_urls": []
+        },
+        "shellinabox.main": {
+            "allowed": [],
+            "corresponding_users": [],
+            "auth_header": true,
+            "label": "Shell In A Box",
+            "show_tile": true,
+            "protected": false,
+            "url": "",
+            "additional_urls": []
+        },
+        "strut.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Strut",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/strut",
+            "additional_urls": []
+        },
+        "transmission.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Transmission",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/torrent",
+            "additional_urls": []
+        },
+        "transmission.rpc": {
+            "allowed": ["visitors"],
+            "corresponding_users": [],
+            "auth_header": true,
+            "label": "Transmission (rpc)",
+            "show_tile": false,
+            "protected": true,
+            "url": "demo.yunohost.org/torrent/transmission/rpc",
+            "additional_urls": [],
+            "sublabel": "rpc"
+        },
+        "ttrss.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Tiny Tiny RSS",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/ttrss",
+            "additional_urls": []
+        },
+        "ttrss.public": {
+            "allowed": ["visitors"],
+            "corresponding_users": [],
+            "auth_header": true,
+            "label": "Tiny Tiny RSS (public)",
+            "show_tile": false,
+            "protected": true,
+            "url": "demo.yunohost.org/ttrss/public.php",
+            "additional_urls": [],
+            "sublabel": "public"
+        },
+        "ttrss.api": {
+            "allowed": ["visitors"],
+            "corresponding_users": [],
+            "auth_header": false,
+            "label": "Tiny Tiny RSS (api)",
+            "show_tile": false,
+            "protected": true,
+            "url": "demo.yunohost.org/ttrss/api",
+            "additional_urls": [],
+            "sublabel": "api"
+        },
+        "wallabag2.main": {
+            "allowed": ["all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Wallabag",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/wallabag",
+            "additional_urls": []
+        },
+        "wordpress.main": {
+            "allowed": ["all_users", "visitors"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "WordPress",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/blog",
+            "additional_urls": []
+        },
+        "wordpress.admin": {
+            "allowed": ["admins"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "WordPress (admin)",
+            "show_tile": false,
+            "protected": false,
+            "url": "demo.yunohost.org/blog/wp-login.php",
+            "additional_urls": ["demo.yunohost.org/blog/wp-admin.php"],
+            "sublabel": "admin"
+        },
+        "zerobin.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Zerobin",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/zerobin",
+            "additional_urls": []
+        },
+        "retroarch.main": {
+            "allowed": ["visitors", "all_users"],
+            "corresponding_users": ["demo"],
+            "auth_header": true,
+            "label": "Retroarch Web Player",
+            "show_tile": true,
+            "protected": false,
+            "url": "demo.yunohost.org/retroarch",
+            "additional_urls": []
+        }
+    }
+}

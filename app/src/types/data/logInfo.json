@@ -1,0 +1,70 @@
+{
+    "description": "Mettre \u00e0 jour l'application 'roundcube'",
+    "name": "20240810-011708-app_upgrade-roundcube",
+    "metadata_path": "/var/log/yunohost/categories/operation/20240810-011708-app_upgrade-roundcube.yml",
+    "metadata": {
+        "ended_at": "2024-08-10T01:17:55.416264+00:00",
+        "env": {
+            "YNH_APP_ACTION": "upgrade",
+            "YNH_APP_BASEDIR": "/var/cache/yunohost/app_tmp_work_dirs/app_fi5tjppn",
+            "YNH_APP_CURRENT_VERSION": "1.6.7~ynh2",
+            "YNH_APP_ID": "roundcube",
+            "YNH_APP_INSTANCE_NAME": "roundcube",
+            "YNH_APP_INSTANCE_NUMBER": "1",
+            "YNH_APP_MANIFEST_VERSION": "1.6.8~ynh1",
+            "YNH_APP_PACKAGING_FORMAT": "2.0",
+            "YNH_APP_UPGRADE_TYPE": "UPGRADE_APP",
+            "YNH_ARCH": "amd64",
+            "YNH_DEBIAN_VERSION": "bullseye",
+            "YNH_HELPERS_VERSION": "2"
+        },
+        "error": null,
+        "interface": "cli",
+        "operation": "app_upgrade",
+        "parent": null,
+        "related_to": [["app", "roundcube"]],
+        "started_at": "2024-08-10T01:17:08.726144+00:00",
+        "success": true,
+        "yunohost_version": "11.2.27",
+        "suboperations": [
+            {
+                "name": "20240810-011712-permission_url-roundcube",
+                "description": "Mise \u00e0 jour de l'URL associ\u00e9e \u00e0 l'autorisation 'roundcube'",
+                "success": true
+            },
+            {
+                "name": "20240810-011710-user_permission_update-roundcube",
+                "description": "Mise \u00e0 jour des acc\u00e8s pour la permission 'roundcube'",
+                "success": true
+            }
+        ]
+    },
+    "log_path": "/var/log/yunohost/categories/operation/20240810-011708-app_upgrade-roundcube.log",
+    "logs": [
+        "2024-08-10 01:17:51,415: DEBUG - ATTENTION: Update dependencies by running `php composer.phar update --no-dev`",
+        "2024-08-10 01:17:51,415: DEBUG - -----------------------------------------------------------------------------",
+        "2024-08-10 01:17:51,415: DEBUG - This instance of Roundcube is up-to-date.",
+        "2024-08-10 01:17:51,415: DEBUG - Have fun!'",
+        "2024-08-10 01:17:51,416: DEBUG - + echo -e 'Executing database schema update.",
+        "2024-08-10 01:17:51,416: DEBUG - Executing php composer.phar to update dependencies...",
+        "2024-08-10 01:17:51,416: DEBUG - -----------------------------------------------------------------------------",
+        "2024-08-10 01:17:51,417: DEBUG - ATTENTION: Update dependencies by running `php composer.phar update --no-dev`",
+        "2024-08-10 01:17:51,417: DEBUG - -----------------------------------------------------------------------------",
+        "2024-08-10 01:17:51,417: DEBUG - This instance of Roundcube is up-to-date.",
+        "2024-08-10 01:17:51,417: DEBUG - Have fun!'",
+        "2024-08-10 01:17:51,418: DEBUG - + popd",
+        "2024-08-10 01:17:51,418: DEBUG - /var/cache/yunohost/app_tmp_work_dirs/app_fi5tjppn/scripts",
+        "2024-08-10 01:17:51,419: WARNING - Executing database schema update.",
+        "2024-08-10 01:17:51,434: WARNING - Executing php composer.phar to update dependencies...",
+        "2024-08-10 01:17:51,434: WARNING - -----------------------------------------------------------------------------",
+        "2024-08-10 01:17:51,434: WARNING - ATTENTION: Update dependencies by running `php composer.phar update --no-dev`",
+        "2024-08-10 01:17:51,435: WARNING - -----------------------------------------------------------------------------",
+        "2024-08-10 01:17:51,435: WARNING - This instance of Roundcube is up-to-date.",
+        "2024-08-10 01:17:51,436: WARNING - Have fun!",
+        "2024-08-10 01:17:51,555: DEBUG - + ynh_exit_properly",
+        "2024-08-10 01:17:51,555: DEBUG - + [[ upgrade =~ ^install$|^upgrade$|^restore$ ]]",
+        "2024-08-10 01:17:51,556: INFO - [####################] > Installation of roundcube completed",
+        "2024-08-10 01:17:52,561: DEBUG - Checking that required services are up and running...",
+        "2024-08-10 01:17:55,405: SUCCESS - roundcube mis \u00e0 jour"
+    ]
+}

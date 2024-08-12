@@ -16,6 +16,7 @@ const router = createRouter({
     // if animations are enabled, we need to delay a bit the returned value of the saved
     // scroll state because the component probably hasn't updated the window height yet.
     // Note: this will only work with routes that use stored data or that has static content
+    // FIXME/TODO no scroll on tab change
     const { transitions } = useSettings()
     if (transitions.value && savedPosition) {
       return new Promise((resolve) => {
@@ -43,18 +44,19 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'post-install' && installed.value) {
     return next('/')
   }
+  next()
   // Allow if connected or route is not protected
-  if (connected.value || to.meta.noAuth) {
-    next()
-  } else {
-    onLogout(to)
-  }
+  // if (connected.value || to.meta.noAuth) {
+  //   next()
+  // } else {
+  //   onLogout(to)
+  // }
 })
 
 router.afterEach((to, from) => {
   const { updateRouterKey, updateBreadcrumb } = useInfos()
-  updateRouterKey({ to, from })
-  updateBreadcrumb({ to, from })
+  updateRouterKey(to)
+  updateBreadcrumb(to)
 })
 
 export default router

@@ -9,6 +9,36 @@ import LoginView from '@/views/LoginView.vue'
 import ToolList from '@/views/tool/ToolList.vue'
 
 const routes: RouteRecordRaw[] = [
+  // {
+  //   name: 'home',
+  //   path: '/:username?',
+  //   props: true,
+  //   component: () => import('@/views/ViewTest.vue'),
+  //   meta: {
+  //     routerParams: ['username'],
+  //     args: { trad: 'tools_yunohost_settings' },
+  //     breadcrumb: ['home'],
+  //     skeleton: 'ListGroupSkeleton',
+  //   },
+  //   // children: [
+  //   //   {
+  //   //     path: '',
+  //   //     component: () => import('@/components/ConfigPanel.vue'),
+  //   //     props: true,
+  //   //     meta: {
+  //   //       routerParams: [],
+  //   //       args: { trad: 'tools_yunohost_settings' },
+  //   //       breadcrumb: ['tool-list', 'tool-settings'],
+  //   //     },
+  //   //   },
+  //   // ],
+  //   // props: true,
+  //   // component: HomeView,
+  //   // meta: {
+  //   //   args: { trad: 'home' },
+  //   // },
+  // },
+
   {
     name: 'home',
     path: '/',
@@ -51,6 +81,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'users' },
       breadcrumb: ['user-list'],
+      skeleton: 'ListGroupSkeleton',
     },
   },
   {
@@ -60,6 +91,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'users_new' },
       breadcrumb: ['user-list', 'user-create'],
+      skeleton: 'CardFormSkeleton',
     },
   },
   {
@@ -80,6 +112,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { param: 'name' },
       breadcrumb: ['user-list', 'user-info'],
+      skeleton: 'CardInfoSkeleton',
     },
   },
   {
@@ -90,6 +123,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { param: 'name', trad: 'user_username_edit' },
       breadcrumb: ['user-list', 'user-info', 'user-edit'],
+      skeleton: 'CardFormSkeleton',
     },
   },
 
@@ -103,6 +137,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'groups_and_permissions' },
       breadcrumb: ['user-list', 'group-list'],
+      skeleton: 'CardFormSkeleton',
     },
   },
   {
@@ -125,6 +160,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'domains' },
       breadcrumb: ['domain-list'],
+      skeleton: 'ListGroupSkeleton',
     },
   },
   {
@@ -134,6 +170,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'domain_add' },
       breadcrumb: ['domain-list', 'domain-add'],
+      skeleton: 'CardFormSkeleton',
     },
   },
   {
@@ -145,6 +182,7 @@ const routes: RouteRecordRaw[] = [
       routerParams: ['name'], // Override router key params to avoid view recreation at tab change.
       args: { param: 'name' },
       breadcrumb: ['domain-list', 'domain-info'],
+      skeleton: 'CardListSkeleton',
     },
   },
 
@@ -158,6 +196,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'applications' },
       breadcrumb: ['app-list'],
+      skeleton: 'ListGroupSkeleton',
     },
   },
   {
@@ -168,6 +207,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'catalog' },
       breadcrumb: ['app-list', 'app-catalog'],
+      skeleton: 'AppCatalogSkeleton',
     },
   },
   {
@@ -178,6 +218,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'install_name', param: 'id' },
       breadcrumb: ['app-list', 'app-catalog', 'app-install'],
+      skeleton: ['CardInfoSkeleton', { is: 'CardFormSkeleton', cols: null }],
     },
   },
   {
@@ -188,6 +229,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'install_name', param: 'id' },
       breadcrumb: ['app-list', 'app-catalog', 'app-install-custom'],
+      skeleton: ['CardInfoSkeleton', { is: 'CardFormSkeleton', cols: null }],
     },
   },
   {
@@ -199,6 +241,7 @@ const routes: RouteRecordRaw[] = [
       routerParams: ['id'], // Override router key params to avoid view recreation at tab change.
       args: { param: 'id' },
       breadcrumb: ['app-list', 'app-info'],
+      skeleton: [{ is: 'CardInfoSkeleton', itemCount: 8 }, 'CardFormSkeleton'],
     },
   },
 
@@ -212,6 +255,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'system_update' },
       breadcrumb: ['update'],
+      skeleton: 'CardListSkeleton',
     },
   },
 
@@ -225,6 +269,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'services' },
       breadcrumb: ['tool-list', 'service-list'],
+      skeleton: 'ListGroupSkeleton',
     },
   },
   {
@@ -235,6 +280,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { param: 'name' },
       breadcrumb: ['tool-list', 'service-list', 'service-info'],
+      skeleton: 'CardInfoSkeleton',
     },
   },
 
@@ -257,16 +303,18 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'logs' },
       breadcrumb: ['tool-list', 'tool-logs'],
+      skeleton: 'CardListSkeleton',
     },
   },
   {
     name: 'tool-log',
-    path: '/tools/logs/:name',
+    path: '/tools/logs/:name/:n?',
     component: () => import('@/views/tool/ToolLog.vue'),
     props: true,
     meta: {
       args: { param: 'name' },
       breadcrumb: ['tool-list', 'tool-logs', 'tool-log'],
+      skeleton: 'CardInfoSkeleton',
     },
   },
   {
@@ -276,6 +324,10 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'migrations' },
       breadcrumb: ['tool-list', 'tool-migrations'],
+      skeleton: [
+        { is: 'CardListSkeleton', itemCount: 3 },
+        { is: 'CardListSkeleton', itemCount: 3 },
+      ],
     },
   },
   {
@@ -285,6 +337,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'firewall' },
       breadcrumb: ['tool-list', 'tool-firewall'],
+      skeleton: 'CardFormSkeleton',
     },
   },
   {
@@ -305,6 +358,7 @@ const routes: RouteRecordRaw[] = [
       routerParams: [],
       args: { trad: 'tools_yunohost_settings' },
       breadcrumb: ['tool-list', 'tool-settings'],
+      skeleton: 'CardFormSkeleton',
     },
   },
   {
@@ -327,6 +381,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'diagnosis' },
       breadcrumb: ['diagnosis'],
+      skeleton: ['CardListSkeleton', 'CardListSkeleton', 'CardListSkeleton'],
     },
   },
 
@@ -350,6 +405,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { param: 'id' },
       breadcrumb: ['backup', 'backup-list'],
+      skeleton: 'ListGroupSkeleton',
     },
   },
   {
@@ -360,6 +416,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { param: 'name' },
       breadcrumb: ['backup', 'backup-list', 'backup-info'],
+      skeleton: [{ is: 'CardInfoSkeleton', itemCount: 4 }, 'CardListSkeleton'],
     },
   },
   {
@@ -370,6 +427,7 @@ const routes: RouteRecordRaw[] = [
     meta: {
       args: { trad: 'backup_create' },
       breadcrumb: ['backup', 'backup-list', 'backup-create'],
+      skeleton: 'CardListSkeleton',
     },
   },
 ]

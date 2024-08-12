@@ -1,0 +1,41 @@
+{
+    "certificate": {
+        "subject": "demo.yunohost.org",
+        "CA_name": "yunohost.org",
+        "CA_type": "selfsigned",
+        "validity": 3538,
+        "style": "warning",
+        "summary": "selfsigned",
+        "ACME_eligible": false
+    },
+    "registrar": "ovh",
+    "apps": [
+        { "name": "Nextcloud", "id": "nextcloud", "path": "/nextcloud" },
+        { "name": "Searx", "id": "searx", "path": "/searx" },
+        { "name": "Jirafeau", "id": "jirafeau", "path": "/jirafeau" },
+        { "name": "Strut", "id": "strut", "path": "/strut" },
+        { "name": "Tiny Tiny RSS", "id": "ttrss", "path": "/ttrss" },
+        { "name": "Ba\u00efkal", "id": "baikal", "path": "/baikal" },
+        { "name": "AgenDAV", "id": "agendav", "path": "/agendav" },
+        { "name": "Hextris", "id": "hextris", "path": "/hextris" },
+        { "name": "Piwigo", "id": "piwigo", "path": "/piwigo" },
+        { "name": "WordPress", "id": "wordpress", "path": "/blog" },
+        { "name": "Kanboard", "id": "kanboard", "path": "/kanboard" },
+        { "name": "phpMyAdmin", "id": "phpmyadmin", "path": "/phpmyadmin" },
+        { "name": "Rainloop", "id": "rainloop", "path": "/rainloop" },
+        { "name": "Transmission", "id": "transmission", "path": "/torrent" },
+        { "name": "OpenSondage", "id": "opensondage", "path": "/date" },
+        { "name": "Roundcube", "id": "roundcube", "path": "/webmail" },
+        { "name": "Dokuwiki", "id": "dokuwiki", "path": "/dokuwiki" },
+        { "name": "Zerobin", "id": "zerobin", "path": "/zerobin" },
+        {
+            "name": "Etherpad MyPads",
+            "id": "etherpad_mypads",
+            "path": "/etherpad"
+        },
+        { "name": "Ampache", "id": "ampache", "path": "/ampache" },
+        { "name": "Wallabag", "id": "wallabag2", "path": "/wallabag" }
+    ],
+    "main": true,
+    "topest_parent": null
+}

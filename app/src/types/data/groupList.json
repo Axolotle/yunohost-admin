@@ -1,0 +1,72 @@
+{
+    "groups": {
+        "admins": {
+            "members": ["demo"],
+            "permissions": [
+                "baikal.admin",
+                "dokuwiki.admin",
+                "etherpad_mypads.admin",
+                "phpmyadmin.main",
+                "wordpress.admin"
+            ]
+        },
+        "all_users": {
+            "members": ["demo"],
+            "permissions": [
+                "mail.main",
+                "xmpp.main",
+                "ampache.main",
+                "agendav.main",
+                "dokuwiki.main",
+                "etherpad_mypads.main",
+                "hextris.main",
+                "jirafeau.main",
+                "kanboard.main",
+                "nextcloud.main",
+                "nextcloud.api",
+                "opensondage.main",
+                "piwigo.main",
+                "rainloop.main",
+                "roundcube.main",
+                "searx.main",
+                "strut.main",
+                "transmission.main",
+                "ttrss.main",
+                "wallabag2.main",
+                "wordpress.main",
+                "zerobin.main",
+                "retroarch.main"
+            ]
+        },
+        "visitors": {
+            "members": [],
+            "permissions": [
+                "ampache.main",
+                "baikal.main",
+                "dokuwiki.main",
+                "etherpad_mypads.main",
+                "hextris.main",
+                "jirafeau.main",
+                "kanboard.main",
+                "kanboard.ics",
+                "nextcloud.main",
+                "nextcloud.api",
+                "opensondage.main",
+                "piwigo.main",
+                "roundcube.main",
+                "searx.main",
+                "strut.main",
+                "transmission.main",
+                "transmission.rpc",
+                "ttrss.main",
+                "ttrss.public",
+                "ttrss.api",
+                "wordpress.main",
+                "zerobin.main",
+                "retroarch.main"
+            ]
+        },
+        "demo": { "members": ["demo"], "permissions": [] },
+        "testy": { "members": ["testy"], "permissions": [] }
+    }
+}

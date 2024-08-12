@@ -1,0 +1,177 @@
+{
+    "dnsmasq": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:07.429369+00:00",
+        "description": "G\u00e8re la r\u00e9solution des noms de domaine (DNS)",
+        "configuration": "valid"
+    },
+    "dovecot": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:14.242203+00:00",
+        "description": "Permet aux clients de messagerie d'acc\u00e9der/r\u00e9cup\u00e9rer les emails (via IMAP et POP3)",
+        "configuration": "unknown"
+    },
+    "fail2ban": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:14.405267+00:00",
+        "description": "Prot\u00e8ge contre les attaques brute-force et autres types d'attaques venant d'Internet",
+        "configuration": "valid"
+    },
+    "metronome": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:13.165247+00:00",
+        "description": "G\u00e8re les comptes de messagerie instantan\u00e9e XMPP",
+        "configuration": "unknown"
+    },
+    "mysql": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:15.367988+00:00",
+        "description": "Stocke les donn\u00e9es des applications (bases de donn\u00e9es SQL)",
+        "configuration": "unknown"
+    },
+    "nginx": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:11.299963+00:00",
+        "description": "Sert ou permet l'acc\u00e8s \u00e0 tous les sites web h\u00e9berg\u00e9s sur votre serveur",
+        "configuration": "valid"
+    },
+    "postfix": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:13.884894+00:00",
+        "description": "Utilis\u00e9 pour envoyer et recevoir des emails",
+        "configuration": "unknown"
+    },
+    "postgresql": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:16.554513+00:00",
+        "description": "Stocke les donn\u00e9es d'application (base de donn\u00e9es SQL)",
+        "configuration": "unknown"
+    },
+    "redis-server": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:06.144255+00:00",
+        "description": "Une base de donn\u00e9es sp\u00e9cialis\u00e9e utilis\u00e9e pour l'acc\u00e8s rapide aux donn\u00e9es, les files d'attentes et la communication entre les programmes",
+        "configuration": "unknown"
+    },
+    "rspamd": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:07.445201+00:00",
+        "description": "Filtre le pourriel, et d'autres fonctionnalit\u00e9s li\u00e9es aux emails",
+        "configuration": "unknown"
+    },
+    "slapd": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:06.109767+00:00",
+        "description": "Stocke les comptes, domaines et leurs informations li\u00e9es",
+        "configuration": "valid"
+    },
+    "ssh": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:05.769586+00:00",
+        "description": "Vous permet de vous connecter \u00e0 distance \u00e0 votre serveur via un terminal (protocole SSH)",
+        "configuration": "valid"
+    },
+    "yunohost-api": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:05.015926+00:00",
+        "description": "Permet les interactions entre l'interface web de YunoHost et le syst\u00e8me",
+        "configuration": "unknown"
+    },
+    "yunohost-firewall": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:14.467935+00:00",
+        "description": "G\u00e8re l'ouverture et la fermeture des ports de connexion aux services",
+        "configuration": "unknown"
+    },
+    "yunomdns": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:05.020835+00:00",
+        "description": "Vous permet d'atteindre votre serveur en utilisant 'yunohost.local' sur votre r\u00e9seau local",
+        "configuration": "unknown"
+    },
+    "etherpad_mypads": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:19.021855+00:00",
+        "description": "Collaborative editor",
+        "configuration": "unknown"
+    },
+    "shellinabox": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:05.705848+00:00",
+        "description": "Web based AJAX terminal emulator",
+        "configuration": "unknown"
+    },
+    "transmission-daemon": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:08.062131+00:00",
+        "description": "BitTorrent Client",
+        "configuration": "unknown"
+    },
+    "ttrss": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:18.891162+00:00",
+        "description": "News feed reader and aggregator",
+        "configuration": "unknown"
+    },
+    "uwsgi-app@searx": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:06.044673+00:00",
+        "description": "searx uWSGI app",
+        "configuration": "unknown"
+    },
+    "php7.4-fpm": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:12.992842+00:00",
+        "description": "The PHP 7.4 FastCGI Process Manager",
+        "configuration": "valid"
+    },
+    "php8.0-fpm": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:12.982235+00:00",
+        "description": "The PHP 8.0 FastCGI Process Manager",
+        "configuration": "valid"
+    },
+    "php8.1-fpm": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:12.811722+00:00",
+        "description": "The PHP 8.1 FastCGI Process Manager",
+        "configuration": "valid"
+    },
+    "php8.2-fpm": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:12.800935+00:00",
+        "description": "The PHP 8.2 FastCGI Process Manager",
+        "configuration": "valid"
+    },
+    "php8.3-fpm": {
+        "status": "running",
+        "start_on_boot": "enabled",
+        "last_state_change": "2024-08-06T14:00:12.983341+00:00",
+        "description": "The PHP 8.3 FastCGI Process Manager",
+        "configuration": "valid"
+    }
+}

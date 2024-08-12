@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import type { Component } from 'vue'
-
 defineOptions({ inheritAttrs: false })
-withDefaults(
-  defineProps<{
-    loading?: boolean
-    skeleton?: string | Component
-  }>(),
-  {
-    loading: false,
-    skeleton: 'CardFormSkeleton',
-  },
-)
 
 const slots = defineSlots<{
   'top-bar-group-left': any
@@ -38,18 +26,7 @@ const slots = defineSlots<{
 
     <slot name="top" />
 
-    <BSkeletonWrapper :loading="loading">
-      <template #loading>
-        <slot name="skeleton">
-          <Component :is="skeleton" />
-        </slot>
-      </template>
-
-      <!-- Empty div to be able to receive multiple components -->
-      <div>
-        <slot name="default" />
-      </div>
-    </BSkeletonWrapper>
+    <slot name="default" />
 
     <slot name="bot" />
   </div>

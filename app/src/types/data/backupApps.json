@@ -1,0 +1,157 @@
+{
+    "apps": [
+        {
+            "description": "Client web pour CalDAV",
+            "name": "AgenDAV",
+            "version": "2.6.0~ynh4",
+            "domain_path": "demo.yunohost.org/agendav",
+            "id": "agendav"
+        },
+        {
+            "description": "Application de streaming audio et vid\u00e9o",
+            "name": "Ampache",
+            "version": "6.6.0~ynh1",
+            "domain_path": "demo.yunohost.org/ampache",
+            "id": "ampache"
+        },
+        {
+            "description": "Serveur CalDAV et CardDAV l\u00e9ger",
+            "name": "Ba\u00efkal",
+            "version": "0.9.4~ynh3",
+            "domain_path": "demo.yunohost.org/baikal",
+            "id": "baikal"
+        },
+        {
+            "description": "Wiki l\u00e9ger, simple \u00e0 utiliser et tr\u00e8s polyvalent",
+            "name": "Dokuwiki",
+            "version": "2024.02.06a~ynh1",
+            "domain_path": "demo.yunohost.org/dokuwiki",
+            "id": "dokuwiki"
+        },
+        {
+            "description": "\u00c9diteur en ligne fournissant l'\u00e9dition collaborative en temps r\u00e9el",
+            "name": "Etherpad MyPads",
+            "version": "1.9.1~ynh3",
+            "domain_path": "demo.yunohost.org/etherpad",
+            "id": "etherpad_mypads"
+        },
+        {
+            "description": "Jeu de puzzle tr\u00e8s rapide",
+            "name": "Hextris",
+            "version": "2023.06.09~ynh1",
+            "domain_path": "demo.yunohost.org/hextris",
+            "id": "hextris"
+        },
+        {
+            "description": "H\u00e9bergez simplement un fichier et partagez-le avec un lien unique",
+            "name": "Jirafeau",
+            "version": "4.5.0~ynh2",
+            "domain_path": "demo.yunohost.org/jirafeau",
+            "id": "jirafeau"
+        },
+        {
+            "description": "Logiciel de gestion de projet Kanban",
+            "name": "Kanboard",
+            "version": "1.2.38~ynh2",
+            "domain_path": "demo.yunohost.org/kanboard",
+            "id": "kanboard"
+        },
+        {
+            "description": "Stockage en ligne, plateforme de partage de fichiers et diverses autres applications",
+            "name": "Nextcloud",
+            "version": "29.0.4~ynh1",
+            "domain_path": "demo.yunohost.org/nextcloud",
+            "id": "nextcloud"
+        },
+        {
+            "description": "Service pour planifier un rendez-vous ou prendre une d\u00e9cision rapidement et facilement",
+            "name": "OpenSondage",
+            "version": "1.1.19~ynh3",
+            "domain_path": "demo.yunohost.org/date",
+            "id": "opensondage"
+        },
+        {
+            "description": "Application web de gestion des bases de donn\u00e9es MySQL",
+            "name": "phpMyAdmin",
+            "version": "5.2.1~ynh1",
+            "domain_path": "demo.yunohost.org/phpmyadmin",
+            "id": "phpmyadmin"
+        },
+        {
+            "description": "Galerie de photos open source pour le web",
+            "name": "Piwigo",
+            "version": "14.3.0~ynh1",
+            "domain_path": "demo.yunohost.org/piwigo",
+            "id": "piwigo"
+        },
+        {
+            "description": "Webmail l\u00e9ger multi-comptes",
+            "name": "Rainloop",
+            "version": "1.17.0~ynh1",
+            "domain_path": "demo.yunohost.org/rainloop",
+            "id": "rainloop"
+        },
+        {
+            "description": "Webmail Open Source",
+            "name": "Roundcube",
+            "version": "1.6.7~ynh2",
+            "domain_path": "demo.yunohost.org/webmail",
+            "id": "roundcube"
+        },
+        {
+            "description": "M\u00e9ta-moteur de recherche respectueux de la vie priv\u00e9e et bidouillable",
+            "name": "Searx",
+            "version": "1.1.0~ynh3",
+            "domain_path": "demo.yunohost.org/searx",
+            "id": "searx"
+        },
+        {
+            "description": "\u00c9mulateur de terminal web",
+            "name": "Shell In A Box",
+            "version": "2.21~ynh4",
+            "id": "shellinabox"
+        },
+        {
+            "description": "\u00c9diteur de diapositives permettant de cr\u00e9er des pr\u00e9sentations impress.js",
+            "name": "Strut",
+            "version": "20231204~ynh1",
+            "domain_path": "demo.yunohost.org/strut",
+            "id": "strut"
+        },
+        {
+            "description": "Client BitTorrent libre et rapide",
+            "name": "Transmission",
+            "version": "3.00~ynh7",
+            "domain_path": "demo.yunohost.org/torrent",
+            "id": "transmission"
+        },
+        {
+            "description": "Lecteur de flux d\u2019actualit\u00e9 utilisant les protocoles RSS et Atom",
+            "name": "Tiny Tiny RSS",
+            "version": "20231202~ynh3",
+            "domain_path": "demo.yunohost.org/ttrss",
+            "id": "ttrss"
+        },
+        {
+            "description": "Enregistrez et classez les articles. Lisez-les plus tard",
+            "name": "Wallabag",
+            "version": "2.5.4~ynh4",
+            "domain_path": "demo.yunohost.org/wallabag",
+            "id": "wallabag2"
+        },
+        {
+            "description": "Logiciel de cr\u00e9ation de blog ou de site Web",
+            "name": "WordPress",
+            "version": "6.5~ynh1",
+            "domain_path": "demo.yunohost.org/blog",
+            "id": "wordpress"
+        },
+        {
+            "description": "Pastebin minimaliste o\u00f9 le serveur n'a aucune connaissance des donn\u00e9es copi\u00e9es",
+            "name": "Zerobin",
+            "version": "1.7.1~ynh1",
+            "domain_path": "demo.yunohost.org/zerobin",
+            "id": "zerobin"
+        }
+    ]
+}

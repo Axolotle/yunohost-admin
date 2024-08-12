@@ -1,0 +1,7 @@
+{
+    "status": "running",
+    "start_on_boot": "enabled",
+    "last_state_change": "2024-08-06T14:00:11.299963+00:00",
+    "description": "Sert ou permet l'acc\u00e8s \u00e0 tous les sites web h\u00e9berg\u00e9s sur votre serveur",
+    "configuration": "valid"
+}

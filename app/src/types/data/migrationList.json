@@ -1,0 +1,58 @@
+{
+    "migrations": [
+        {
+            "id": "0021_migrate_to_bullseye",
+            "number": 21,
+            "name": "migrate_to_bullseye",
+            "mode": "manual",
+            "state": "skipped",
+            "description": "Mise \u00e0 niveau du syst\u00e8me vers Debian Bullseye et YunoHost 11.x",
+            "disclaimer": null
+        },
+        {
+            "id": "0022_php73_to_php74_pools",
+            "number": 22,
+            "name": "php73_to_php74_pools",
+            "mode": "auto",
+            "state": "skipped",
+            "description": "Migration des fichiers de configuration php7.3-fpm 'pool' vers php7.4",
+            "disclaimer": null
+        },
+        {
+            "id": "0023_postgresql_11_to_13",
+            "number": 23,
+            "name": "postgresql_11_to_13",
+            "mode": "auto",
+            "state": "skipped",
+            "description": "Migration des bases de donn\u00e9es de PostgreSQL 11 vers 13",
+            "disclaimer": null
+        },
+        {
+            "id": "0024_rebuild_python_venv",
+            "number": 24,
+            "name": "rebuild_python_venv",
+            "mode": "auto",
+            "state": "skipped",
+            "description": "R\u00e9parer l'application Python apr\u00e8s la migration Bullseye",
+            "disclaimer": null
+        },
+        {
+            "id": "0025_global_settings_to_configpanel",
+            "number": 25,
+            "name": "global_settings_to_configpanel",
+            "mode": "auto",
+            "state": "skipped",
+            "description": "Migrer l'ancienne terminologie des param\u00e8tres globaux vers la nouvelle terminologie modernis\u00e9e",
+            "disclaimer": null
+        },
+        {
+            "id": "0026_new_admins_group",
+            "number": 26,
+            "name": "new_admins_group",
+            "mode": "auto",
+            "state": "skipped",
+            "description": "Migrer vers le nouveau syst\u00e8me de gestion 'multi-administrateurs' (plusieurs comptes pourront \u00eatre pr\u00e9sents dans le groupe 'Admins' avec des tous les droits d'administration sur toute l'instance YunoHost)",
+            "disclaimer": "null"
+        }
+    ]
+}
